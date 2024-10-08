@@ -10,4 +10,25 @@ A Computer Science Project for the University of Helsinki CSM11006 course.
 
 ## Setup project
 
+Create a `.env.local` file in the root (same place as package.json)
+
+Add the connection string to `.env.local`, replace <ask for connection string> with the connection string.
+
+```
+MONGODB_URI="<ask for connection string>"
+```
+
+Optional:
+
+If you use nvmrc that is recommended, run `nvm use` to get the correct Node version.
+
+Then run:
+
+`npm ci` - to install dependencies
+
 `npm run dev`
+
+You should see:
+`Pinged your deployment. You successfully connected to MongoDB!` once you are connected to DB succesfully.
+
+Url is `localhost:3000`

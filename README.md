@@ -18,11 +18,17 @@ Add the connection string to `.env.local`, replace <ask for connection string> w
 MONGODB_URI="<ask for connection string>"
 ```
 
-Optional:
+### Install Ollama
+
+[Ollama](https://ollama.com/)
+
+Run `ollama pull openhermes2.5-mistral`
+
+### Optional
 
 If you use nvmrc that is recommended, run `nvm use` to get the correct Node version.
 
-Then run:
+### Run
 
 `npm ci` - to install dependencies
 

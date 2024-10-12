@@ -1,11 +1,11 @@
 "use client";
 
-import { useChat } from "ai/react";
 import { useEffect, useState } from "react";
 
 export default function Page() {
-  const [location, setLocation] = useState();
-  const { messages, input, setInput, append } = useChat();
+  const [location, setLocation] = useState(null);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
   useEffect(() => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(({ coords }) => {
@@ -17,6 +17,7 @@ export default function Page() {
 
   return (
     <div>
+      <p>Location: {JSON.stringify(location)}</p>
       <input
         value={input}
         onChange={(event) => {
@@ -24,19 +25,39 @@ export default function Page() {
         }}
         onKeyDown={async (event) => {
           if (event.key === "Enter") {
-            append(
-              {
-                content: input,
-                role: "user",
-              },
-              { data: { location } }
-            );
+            setMessages((currentMessages) => [
+              ...currentMessages,
+              { role: "user", content: input },
+            ]);
+
+            const response = await fetch("/api/chat", {
+              method: "POST",
+              body: JSON.stringify({
+                messages: [...messages, { role: "user", content: input }],
+                data: { location },
+              }),
+            });
+
+            const { messages: newMessages } = await response.json();
+
+            setMessages((currentMessages) => [
+              ...currentMessages,
+              ...newMessages,
+            ]);
           }
         }}
       />
 
       {messages.map((message, index) => (
-        <div key={index}>{message.content}</div>
+        <div key={`${message.role}-${index}`}>
+          {typeof message.content === "string"
+            ? message.content
+            : message.content
+                .filter((part) => part.type === "text")
+                .map((part, partIndex) => (
+                  <div key={partIndex}>{part.text}</div>
+                ))}
+        </div>
       ))}
     </div>
   );

@@ -49,12 +49,15 @@ export async function POST(req) {
   const re = new RegExp("(http|https)://", "i");
   console.log("Test:", re.test(text));
   if (re.test(text)) {
-    console.log(text.split("```")[1]);
+    const url = text.split("```")[1];
+    console.log(url);
+    // Do the Google API request
+    console.log("Google API request");
+    // Save the Google API request to a vector DB, try to implement RAG and create a HTML page with the results
+
+    // Placeholder....
     return Response.json({ messages: theUrlMessages });
   }
-
-  // Do the Google API request
-  console.log("Google API request");
 
   // Placeholder....
   return Response.json({ messages: responseMessages });

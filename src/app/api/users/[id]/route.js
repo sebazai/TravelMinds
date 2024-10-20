@@ -19,9 +19,10 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
   try {
     await connectToDataBase();
+    const url = new URL(request.url);
+    const id = url.pathname.split('/').pop();
     const data = await request.json();
-    const user = await User.findByIdAndUpdate(params.id, data, { new: true });
-    if (!user) {
+    const user = await User.findByIdAndUpdate(id, data, { new: true });    if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
     return NextResponse.json(user);

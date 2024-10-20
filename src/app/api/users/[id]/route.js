@@ -16,18 +16,26 @@ export async function GET(request, { params }) {
   }
 }
 
+// {
+//   "username": "putUser",
+// }
 export async function PUT(request, { params }) {
   try {
     await connectToDataBase();
-    const url = new URL(request.url);
-    const id = url.pathname.split('/').pop();
     const data = await request.json();
-    const user = await User.findByIdAndUpdate(id, data, { new: true });    
+    const { preferences, ...updateData } = data;
+    const user = await User.findByIdAndUpdate(params.id, updateData, {
+      new: true,
+      runValidators: true,
+    }).populate("preferences");
+
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
+
     return NextResponse.json(user);
   } catch (error) {
+    console.error("Update error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

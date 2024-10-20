@@ -16,6 +16,13 @@ export async function GET(request, { params }) {
   }
 }
 
+//Example Postman
+// {
+//   "title": "putPreference",
+//   "description": "putDescription",
+//   "icon": "putIcon",
+//   "createdBy": "putUser"
+// }
 export async function PUT(request, { params }) {
   try {
     await connectToDataBase();

@@ -1,9 +1,8 @@
-"use client"
+"use client";
 import localFont from "next/font/local";
 import "./globals.css";
-import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
-import {NavBar} from "@/components/NavBar/NavBar";
-
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { NavBar } from "@/components/NavBar/NavBar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,7 +21,7 @@ const metadata = {
 };
 export const darkTheme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: "dark",
   },
 });
 
@@ -54,12 +53,22 @@ export default function RootLayout({children}) {
     <ThemeProvider theme={colorTheme}>
       <CssBaseline/>
       <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
-      {children}
-      <NavBar></NavBar>
-      </body>
+        <body
+          style={{ height: "100vh" }}
+          className={`${geistSans.variable} ${geistMono.variable}`}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100vh",
+            }}
+          >
+            {children}
+            <NavBar />
+          </div>
+        </body>
       </html>
     </ThemeProvider>
-
   );
 }

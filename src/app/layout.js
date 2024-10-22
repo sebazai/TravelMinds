@@ -25,10 +25,33 @@ export const darkTheme = createTheme({
     mode: 'dark',
   },
 });
+
+export const colorTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    background: {
+      main: '#2C2B28',
+    },
+    darkGrey: {
+      main: '#272623',
+    },
+    lightGrey: {
+      main: '#393937',
+    },
+    orange: {
+      main: '#A3512B',
+    },
+    text: {
+      primary: '#E5E5E2',
+      secondary: '#7B6DBB',
+    },
+  },
+});
+
 export default function RootLayout({children}) {
 
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={colorTheme}>
       <CssBaseline/>
       <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>

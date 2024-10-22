@@ -9,17 +9,23 @@ const SavedSearchList = ({ savedSearches }) => {
   }
 
   return (
-    <Container>
-      {savedSearches.map((search, index) => (
-        <PreferenceCard
-          key={index}
-          title={search.title}
-          description={search.description}
-          icon={search.image}
-        />
-      ))}
-    </Container>
+    <>
+      <br/>
+      <h2>My favorites researchs :</h2>
+      <br/>
+      <Container>
+        {savedSearches.map((search, index) => (
+          <PreferenceCard
+            key={index}
+            title={search.title}
+            description={search.description}
+            icon={search.image}
+          />
+        ))}
+      </Container>
+    </>
   );
+  
 };
 
 export default SavedSearchList;

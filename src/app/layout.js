@@ -29,27 +29,25 @@ export const darkTheme = createTheme({
 export const colorTheme = createTheme({
   palette: {
     mode: 'dark',
-    background:{
-      main: '#f9f9f9', 
+    background: {
+      main: '#2C2B28',
     },
-    darkBlue: {
-      main: '#264653', 
+    darkGrey: {
+      main: '#272623',
     },
-    green: {
-      main: '#2a9d8f', 
-    },
-    yellow: {
-      main: '#e9c46a', 
-    },
-    lightOrange: {
-      main: '#e76f51', 
+    lightGrey: {
+      main: '#393937',
     },
     orange: {
-      default: '#f4a261', 
+      main: '#A3512B',
     },
-    
+    text: {
+      primary: '#E5E5E2',
+      secondary: '#7B6DBB',
+    },
   },
 });
+
 export default function RootLayout({children}) {
 
   return (

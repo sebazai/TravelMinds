@@ -4,7 +4,7 @@
       "firstName": "John",
       "countryOfOrigin": "France",
       "countryCode": "FR", 
-      "photo": "https://www.gstatic.com/images/icons/material/system_gm/1x/account_circle_black_24dp.png",
+      "photo": "https://img.icons8.com/ios/50/E5E5E2/user.png",
       "currentLocation": {
         "city": "Paris"
       },
@@ -12,22 +12,22 @@
         {
           "title": "Bike shops",
           "description": "Find bike shops near my current location.",
-          "image": "https://www.gstatic.com/images/icons/material/system_gm/1x/directions_bike_black_24dp.png"
+          "image": "https://www.gstatic.com/images/icons/material/system_gm/1x/directions_bike_black_48dp.png"
         },
         {
           "title": "Veg restaurants",
           "description": "List of vegetarian restaurants nearby.",
-          "image": "https://www.gstatic.com/images/icons/material/system_gm/1x/restaurant_black_24dp.png"
+          "image": "https://www.gstatic.com/images/icons/material/system_gm/1x/restaurant_black_48dp.png"
         },
         {
           "title": "Late gyms",
           "description": "Find sports centers open after 10 PM.",
-          "image": "https://www.gstatic.com/images/icons/material/system_gm/1x/fitness_center_black_24dp.png"
+          "image": "https://www.gstatic.com/images/icons/material/system_gm/1x/fitness_center_black_48dp.png"
         },
         {
           "title": "Cinemas nearby",
           "description": "Search for available cinemas around me.",
-          "image": "https://www.gstatic.com/images/icons/material/system_gm/1x/local_movies_black_24dp.png"
+          "image": "https://www.gstatic.com/images/icons/material/system_gm/1x/local_movies_black_48dp.png"
         }
       ]
     }

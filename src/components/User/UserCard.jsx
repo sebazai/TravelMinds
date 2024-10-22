@@ -3,12 +3,17 @@ import { Box, Typography, Avatar, Grid, Card, CardContent } from '@mui/material'
 
 const UserCard = ({ user }) => {
   return (
-    <Card sx={{  width: '90%', p: 2, display: 'flex', boxShadow: 3, bgcolor: 'background.main' }}>
+    <Card sx={{ width: '90%', p: 2, display: 'flex', boxShadow: 3, bgcolor: 'lightGrey.main' }}>
       <CardContent sx={{ flex: 1 }}>
-        <Typography variant="h5" component="div" 
-        sx={{ color: 'darkBlue.main', 
+        <Typography
+          variant="h5"
+          component="div"
+          sx={{
+            color: 'text.primary',
             fontWeight: 'bold',
-            fontSize: '1.5rem' }}>
+            fontSize: '1.5rem',
+          }}
+        >
           Welcome {user.firstName} {user.lastName}
         </Typography>
 
@@ -30,11 +35,11 @@ const UserCard = ({ user }) => {
                   style={{ width: '1.5em', marginRight: '8px' }} 
                 />
               )}
-              <Typography variant="body1" sx={{ color: 'lightOrange.main' }}>
+              <Typography variant="body1" sx={{fontWeight: 'bold', color: 'orange.main' }}>
                 {user.countryOfOrigin}
               </Typography>
             </Box>
-            <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', color: 'orange.default' }}>
+            <Typography variant="body2" color="text.primary" sx={{ fontWeight: 'bold', fontStyle: 'italic', color: 'text.primary' }}>
               Actually in {user.currentLocation.city} ...
             </Typography>
           </Grid>

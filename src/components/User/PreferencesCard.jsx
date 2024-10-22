@@ -6,9 +6,14 @@ const PreferenceCard = ({ title, description, icon }) => {
     <Card
       sx={{
         display: 'flex',
-        backgroundColor: 'background.main', 
+        backgroundColor: 'darkGrey.main', 
         borderRadius: '10px',
         marginBottom: 2,
+        border: `1px solid ${theme => theme.palette.border.main}`, 
+        transition: 'transform 0.2s', 
+        '&:hover': {
+          transform: 'scale(1.02)', 
+        },
       }}
     >
       <CardMedia
@@ -19,6 +24,7 @@ const PreferenceCard = ({ title, description, icon }) => {
           width: '48px',
           height: '48px',
           margin: 2,
+          filter: 'brightness(0) invert(1)', 
         }}
       />
       <CardContent
@@ -32,7 +38,7 @@ const PreferenceCard = ({ title, description, icon }) => {
           variant="h6"
           sx={{
             fontWeight: 'bold',
-            color: 'darkBlue.main', 
+            color: 'text.secondary', 
           }}
         >
           {title}
@@ -40,7 +46,9 @@ const PreferenceCard = ({ title, description, icon }) => {
         <Typography
           variant="body2"
           sx={{
-            color: 'orange.default', 
+            color: 'text.primary', 
+            marginTop: 0.5,
+            fontWeight: 'medium', 
           }}
         >
           {description}

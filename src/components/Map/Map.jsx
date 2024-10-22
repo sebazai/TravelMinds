@@ -8,10 +8,11 @@ import {mapResults} from "@/components/Map/mockResults";
 import {ItemMarker} from "@/components/Map/ItemMarker";
 import L from "leaflet";
 
-export const Map = () => {
+export const Map = (props) => {
+  const {position: initialPosition} = props;
   const icon = L.icon({iconUrl: "/images/marker-icon.png"});
 
-  const [position, setPosition] = useState(null); // State to store user's position
+  const [position, setPosition] = useState(initialPosition); // State to store user's position
   const [loading, setLoading] = useState(true);  // Loading state for geolocation
 
   useEffect(() => {

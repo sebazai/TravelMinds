@@ -30,7 +30,7 @@ export default function Page() {
               { role: "user", content: input },
             ]);
 
-            const response = await fetch("/api/chat", {
+            const response = await fetch("/api/places/chat", {
               method: "POST",
               body: JSON.stringify({
                 messages: [...messages, { role: "user", content: input }],
@@ -38,7 +38,9 @@ export default function Page() {
               }),
             });
 
-            const { messages: newMessages } = await response.json();
+            const { messages: newMessages, ...rest } = await response.json();
+
+            console.log(rest);
 
             setMessages((currentMessages) => [
               ...currentMessages,
@@ -50,12 +52,13 @@ export default function Page() {
 
       {messages.map((message, index) => (
         <div key={`${message.role}-${index}`}>
+          {message.role === "user" ? "User: " : "AI: "}
           {typeof message.content === "string"
             ? message.content
             : message.content
                 .filter((part) => part.type === "text")
                 .map((part, partIndex) => (
-                  <div key={partIndex}>{part.text}</div>
+                  <span key={partIndex}>{part.text}</span>
                 ))}
         </div>
       ))}

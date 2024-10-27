@@ -5,8 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 const AddNewPreferenceButton = () => {
   const handleClick = () => {
-    //change page to addPref page
-    console.log('New preference added!'); 
+    window.location.href = '/new_preference';
   };
 
   return (

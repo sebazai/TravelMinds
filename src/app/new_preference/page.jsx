@@ -9,16 +9,9 @@ import {
   Paper,
   Typography,
   Box,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  InputAdornment,
-  OutlinedInput,
 } from "@mui/material";
 
 import { IconPicker } from "@/components/IconPicker/IconPicker";
-import { icon } from "leaflet";
 
 export default function FormPage() {
   const searchParams = useSearchParams();
@@ -40,8 +33,32 @@ export default function FormPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // todo: send form data to the server
-    console.log("Formulaire soumis:", formData);
+
+    const fetchFirstUser = async () => {
+      const response = await fetch('/api/users');
+      const data = await response.json();
+      return data[0]?._id || 'USER_ID'; 
+    };
+
+    fetchFirstUser().then((userId) => {
+      fetch('/api/preferences', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: formData.title,
+        description: formData.description,
+        icon: formData.icon,
+        createdBy: userId
+      })
+      });
+    });
+
+    setFormData({
+      title: "",
+      description: "",
+      icon: "home",
+    });
+
   };
 
   const handleChange = (e) => {

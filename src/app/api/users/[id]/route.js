@@ -1,5 +1,5 @@
-import { User } from "@/app/models/User";
-import { Preference } from "@/app/models/Preference";
+import { User } from "@/models/User";
+import { Preference } from "@/models/Preference";
 import { NextResponse } from "next/server";
 import { connectToDataBase } from "@/app/lib/db";
 

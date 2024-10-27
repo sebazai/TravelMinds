@@ -1,6 +1,6 @@
 import { connectToDataBase } from '@/app/lib/db';
-import { Preference } from '@/app/models/Preference';
-import { User } from '@/app/models/User';
+import { Preference } from '@/models/Preference';
+import { User } from '@/models/User';
 import { NextResponse } from 'next/server';
 
 export async function GET(request, { params }) {

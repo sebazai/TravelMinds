@@ -1,10 +1,12 @@
 import { generateText } from "ai";
 import { NextResponse } from "next/server";
 import { createOllama } from "ollama-ai-provider";
+import { AIModel } from "@/app/constants";
 
 export async function POST(req) {
   const llama = createOllama();
   const request = await req.json();
+  console.log('MIKITA', request);
   const { prompt, data } = request;
 
   const systemPrompt = `You are a helpful tour guide.
@@ -20,7 +22,7 @@ export async function POST(req) {
   console.log("System:", systemPrompt);
   console.log("User prompt:", prompt);
   const { text } = await generateText({
-    model: llama("openhermes2.5-mistral"),
+    model: llama(AIModel),
     system: systemPrompt,
     prompt,
   });
@@ -28,5 +30,6 @@ export async function POST(req) {
   console.log("LLM Output:", text);
 
   const json = text.split("```")[1];
-  return NextResponse.json(json);
+  const resp = JSON.parse(json.startsWith("json") ? json.slice(4) : json);
+  return NextResponse.json(resp);
 }

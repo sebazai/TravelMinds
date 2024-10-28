@@ -2,11 +2,14 @@
 import React from 'react';
 import { Button, Typography, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add'; 
+import {useRouter} from "next/navigation";
+
 
 const AddNewPreferenceButton = () => {
+  const router = useRouter();
+
   const handleClick = () => {
-    //change page to addPref page
-    console.log('New preference added!'); 
+    router.push('/new_preference');
   };
 
   return (

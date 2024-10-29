@@ -12,6 +12,7 @@ export default function Page() {
   const [input, setInput] = useState("");
   const [position, setPosition] = useState(null); // State to store user's position
   const [places, setPlaces] = useState([]); // State to store places
+  const [location, setLocation] = useState(null);
 
   useEffect(() => {
     // Get user's location
@@ -28,12 +29,30 @@ export default function Page() {
     }
   }, []);
 
+  useEffect(() => {
+    if (position) {
+      fetch("/api/places/name", {
+        method: "POST",
+        body: JSON.stringify({
+          data: {
+            latitude: position[0],
+            longitude: position[1],
+          },
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setLocation(data.location);
+        });
+    }
+  }, [position]);
+
   if (!position) {
     return <div>Fetching user position...</div>; // Handle error state
   }
   return (
     <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-      <p>Location: {JSON.stringify(position)}</p>
+      <p>Location: {location}</p>
       <input
         value={input}
         onChange={(event) => {
@@ -45,7 +64,7 @@ export default function Page() {
               method: "POST",
               body: JSON.stringify({
                 prompt: input,
-                data: { location: position },
+                data: { position: position, location: location },
               }),
             });
 

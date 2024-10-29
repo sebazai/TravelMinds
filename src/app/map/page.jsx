@@ -40,7 +40,9 @@ export default function Page() {
           },
         }),
       })
-        .then((response) => response.json())
+        .then((response) => {
+          return response.json();
+        })
         .then((data) => {
           setLocation(data.location);
         });

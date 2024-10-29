@@ -1,13 +1,9 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import { Map } from "@/components/Map/Map";
 
 // Remove SSR for MapComponent, Leaflet uses window requiring client-side rendering
-const MapComponent = dynamic(() => import("../../components/Map/Map"), {
-  ssr: false,
-  loading: () => <div>Loading map...</div>,
-});
 
 export default function Page() {
   const [input, setInput] = useState("");
@@ -54,7 +50,7 @@ export default function Page() {
           }
         }}
       />
-      <MapComponent position={position} />
+      <Map position={position} />
     </div>
   );
 }

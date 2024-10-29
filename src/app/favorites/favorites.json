@@ -1,0 +1,35 @@
+{
+    "places": [
+      {
+        "title": "Notre-Dame Cathedral",
+        "description": "A famous Gothic cathedral located on the Île de la Cité in Paris, known for its stunning architecture.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg",
+        "rate":5
+      },
+      {
+        "title": "Central Park",
+        "description": "A large public park in New York City, offering green spaces, lakes, and walking paths in the heart of Manhattan.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg",
+        "rate":3.6
+      },
+      {
+        "title": "Eiffel Tower",
+        "description": "An iconic iron structure in Paris, France, recognized worldwide as a symbol of France.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg",
+        "rate":4
+      },
+      {
+        "title": "Big Ben",
+        "description": "The nickname for the Great Bell of the clock at the north end of the Palace of Westminster in London.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg",
+        "rate":1
+      },
+      {
+        "title": "Sagrada Familia",
+        "description": "A large, unfinished basilica in Barcelona, Spain, designed by the architect Antoni Gaudí.",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg",
+        "rate":2.5
+      }
+    ]
+  }
+  

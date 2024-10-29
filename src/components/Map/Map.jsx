@@ -1,41 +1,74 @@
-'use client'
-import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css"; // Re-uses images from ~leaflet package
-import "leaflet-defaulticon-compatibility";
-import {ItemMarker} from "@/components/Map/ItemMarker";
-import L from "leaflet";
-import {SelectionOverlay} from "@/components/Map/SelectionOverlay";
-import {useChatMutation} from "@/store/services/chatApi";
+"use client";
 
-export const Map = (props) => {
-  const {position} = props;
-  const icon = L.icon({iconUrl: "/images/marker-icon.png"});
-  const [chat, { isLoading, isSuccess, data, error }] = useChatMutation();
+// IMPORTANT: the order matters!
+import "leaflet/dist/leaflet.css";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
+import "leaflet-defaulticon-compatibility";
+
+import { useRef, useEffect } from "react";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { ItemMarker } from "@/components/Map/ItemMarker";
+import { SelectionOverlay } from "@/components/Map/SelectionOverlay";
+import L from "leaflet";
+
+const Map = (props) => {
+  const { position, placesData } = props;
+
+  const mapRef = useRef();
+
+  useEffect(() => {
+    // Wait until the map is initialized
+    if (!mapRef.current) return;
+
+    console.log("Running effect", placesData);
+    // Add new markers for the data received
+    const markers = placesData.places.map((item) => {
+      const marker = L.marker([
+        item.coordinates.latitude,
+        item.coordinates.longitude,
+      ]);
+      marker.bindPopup(`<p>${item.name}</p>`);
+      marker.addTo(mapRef.current); // Adds marker to the map
+      return marker;
+    });
+
+    // Cleanup function to remove markers when data changes
+    return () => {
+      markers.forEach((marker) => mapRef.current.removeLayer(marker));
+    };
+  }, [placesData]); // Runs whenever data changes
 
   if (!position) {
     return <div>Unable to retrieve your location</div>; // Handle error state
   }
+
   return (
-    <div>
-      <SelectionOverlay chat={chat} location={position} chips={["cycling", "jogging", "military museum", 'soviet era related points of interest']}></SelectionOverlay>
+    <div style={{ height: "100%" }}>
+      <SelectionOverlay
+        location={position}
+        chips={[
+          "cycling",
+          "jogging",
+          "military museum",
+          "soviet era related points of interest",
+        ]}
+      ></SelectionOverlay>
       <MapContainer
-        style={{ height: "calc(100vh - 99px)" }}
+        ref={mapRef}
+        style={{ height: "100%" }}
         center={position}
         zoom={13}
-        scrollWheelZoom={false}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         ></TileLayer>
-        {data && data.places.map((item) => {
-          return <ItemMarker item={item} key={item.address} icon={icon} />;
-        })}
-        <Marker position={position} icon={icon}>
+        <Marker position={position}>
           <Popup>You are here</Popup>
         </Marker>
       </MapContainer>
     </div>
   );
 };
+
+export default Map;

@@ -1,13 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
-import { Map } from "@/components/Map/Map";
 
-// Remove SSR for MapComponent, Leaflet uses window requiring client-side rendering
+const Map = dynamic(() => import("@/components/Map/Map"), {
+  loading: () => <p>The great map of Earth is loading...</p>,
+  ssr: false,
+});
 
 export default function Page() {
   const [input, setInput] = useState("");
   const [position, setPosition] = useState(null); // State to store user's position
+  const [places, setPlaces] = useState([]); // State to store places
 
   useEffect(() => {
     // Get user's location
@@ -19,7 +23,7 @@ export default function Page() {
         },
         (error) => {
           console.error("Error getting location: ", error);
-        }
+        },
       );
     }
   }, []);
@@ -46,11 +50,11 @@ export default function Page() {
             });
 
             const places = await response.json();
-            console.log(places);
+            setPlaces(places);
           }
         }}
       />
-      <Map position={position} />
+      {position && <Map position={position} placesData={places} />}
     </div>
   );
 }

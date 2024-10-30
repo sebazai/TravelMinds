@@ -49,6 +49,36 @@ export default function Page() {
     }
   }, [position]);
 
+  const fetchPlaces = async (input) => {
+    const response = await fetch("/api/places", {
+      method: "POST",
+      body: JSON.stringify({
+        prompt: input,
+        data: { location: location },
+      }),
+    });
+
+    const places = await response.json();
+    const enrichPlaces = await Promise.all(
+      places.places.map(async (place) => {
+        const addressToLatLon = await fetch("/api/places/address", {
+          method: "POST",
+          body: JSON.stringify({ address: place.address }),
+        });
+        const data = await addressToLatLon.json();
+        return {
+          ...place,
+          address: data.address,
+          coordinates: {
+            latitude: data.latitude,
+            longitude: data.longitude,
+          },
+        };
+      }),
+    );
+    setPlaces(enrichPlaces);
+  };
+
   if (!position) {
     return <div>Fetching user position...</div>; // Handle error state
   }
@@ -62,20 +92,17 @@ export default function Page() {
         }}
         onKeyDown={async (event) => {
           if (event.key === "Enter") {
-            const response = await fetch("/api/places", {
-              method: "POST",
-              body: JSON.stringify({
-                prompt: input,
-                data: { position: position, location: location },
-              }),
-            });
-
-            const places = await response.json();
-            setPlaces(places);
+            await fetchPlaces(input);
           }
         }}
       />
-      {position && <Map position={position} placesData={places} />}
+      {position && (
+        <Map
+          position={position}
+          placesData={places}
+          fetchPlaces={fetchPlaces}
+        />
+      )}
     </div>
   );
 }

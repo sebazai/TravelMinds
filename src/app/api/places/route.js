@@ -18,9 +18,11 @@ export async function POST(req) {
       1. Limit the search close to the location provided.
       2. Limit the search to a maximum of 5 places.
       3. Ensure the places are unique.
-      4. Ensure the same coordinates are not repeated.
+      4. Ensure the same address is not repeated.
+      5. Ensure the same name is not repeated.
 
-    The output for each place should include keys "address", "name", and "coordinates". "coordinates" is an object with keys "latitude" and "longitude".
+    The output for each place should include keys "address", "name", and "justification". 
+    The "address" key should contain the address of the place. Justification should explain why you think the place is relevant to the user based on the user input.
 
     Please wrap your JSON output in three backticks. The JSON should only contain one key named "places" and the value being the an array of places. Ensure there are no duplicate places. 
     `;

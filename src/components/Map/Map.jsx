@@ -7,12 +7,11 @@ import "leaflet-defaulticon-compatibility";
 
 import { useRef, useEffect } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { ItemMarker } from "@/components/Map/ItemMarker";
 import { SelectionOverlay } from "@/components/Map/SelectionOverlay";
 import L from "leaflet";
 
 const Map = (props) => {
-  const { position, placesData } = props;
+  const { position, placesData: places } = props;
 
   const mapRef = useRef();
 
@@ -20,14 +19,14 @@ const Map = (props) => {
     // Wait until the map is initialized
     if (!mapRef.current) return;
 
-    console.log("Running effect", placesData);
+    console.log("Running effect", places);
     // Add new markers for the data received
-    const markers = placesData.places.map((item) => {
+    const markers = places.map((item) => {
       const marker = L.marker([
         item.coordinates.latitude,
         item.coordinates.longitude,
       ]);
-      marker.bindPopup(`<p>${item.name}</p>`);
+      marker.bindPopup(`<p>${item.name}<br>${item.address}</p>`);
       marker.addTo(mapRef.current); // Adds marker to the map
       return marker;
     });
@@ -36,7 +35,7 @@ const Map = (props) => {
     return () => {
       markers.forEach((marker) => mapRef.current.removeLayer(marker));
     };
-  }, [placesData]); // Runs whenever data changes
+  }, [places]); // Runs whenever data changes
 
   if (!position) {
     return <div>Unable to retrieve your location</div>; // Handle error state

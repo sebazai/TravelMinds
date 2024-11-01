@@ -28,7 +28,17 @@ const Map = (props) => {
         item.coordinates.latitude,
         item.coordinates.longitude,
       ]);
-      marker.bindPopup(renderToString(<ItemMarker item={item} />));
+      marker.bindPopup(
+        // Remove this useEffect if ItemMarker is used and cleanup for Layers is possible in other way
+        renderToString(
+          <>
+            <h2>{item.name}</h2>
+            <p>{item.address}</p>
+            <p>{item.justification}</p>
+            working hours: <b>0:00</b>- <b>0:00</b>
+          </>,
+        ),
+      );
       marker.bindTooltip(item.name);
       marker.addTo(mapRef.current); // Adds marker to the map
       return marker;

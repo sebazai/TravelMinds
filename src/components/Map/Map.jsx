@@ -9,6 +9,8 @@ import { useRef, useEffect } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { SelectionOverlay } from "@/components/Map/SelectionOverlay";
 import L from "leaflet";
+import { ItemMarker } from "./ItemMarker";
+import { renderToString } from "react-dom/server";
 
 const Map = (props) => {
   const { position, placesData: places } = props;
@@ -26,7 +28,8 @@ const Map = (props) => {
         item.coordinates.latitude,
         item.coordinates.longitude,
       ]);
-      marker.bindPopup(`<p>${item.name}<br>${item.address}</p>`);
+      marker.bindPopup(renderToString(<ItemMarker item={item} />));
+      marker.bindTooltip(item.name);
       marker.addTo(mapRef.current); // Adds marker to the map
       return marker;
     });

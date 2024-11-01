@@ -6,15 +6,23 @@ import { AIModel } from "@/app/constants";
 export async function POST(req) {
   const llama = createOllama();
   const request = await req.json();
-  console.log('MIKITA', request);
+  console.log("/api/places", request);
   const { prompt, data } = request;
 
   const systemPrompt = `You are a helpful tour guide.
 
-    Your task is to find relevant places to visit based on user preferences expressed in user input . Limit the search close to the user's location and to a maximum of five places.
-    The location of the user is latitude ${data.location[0]} and longitude ${data.location[1]}.
+    Your task is to find relevant places to visit based on user preferences expressed in user input.
+    The location is ${data.location}.
 
-    The output for each place should include keys "address", "name", and "coordinates". "coordinates" is an object with keys "latitude" and "longitude".
+    Here are additional guidelines you should follow:
+      1. Limit the search close to the location provided.
+      2. Limit the search to a maximum of 5 places.
+      3. Ensure the places are unique.
+      4. Ensure the same address is not repeated.
+      5. Ensure the same name is not repeated.
+
+    The output for each place should include keys "address", "name", and "justification". 
+    The "address" key should contain the address of the place. Justification should explain why you think the place is relevant to the user based on the user input.
 
     Please wrap your JSON output in three backticks. The JSON should only contain one key named "places" and the value being the an array of places. Ensure there are no duplicate places. 
     `;

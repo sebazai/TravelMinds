@@ -5,18 +5,28 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
 import "leaflet-defaulticon-compatibility";
 
-import { useRef, useEffect } from "react";
+import {useRef, useEffect, useState} from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { SelectionOverlay } from "@/components/Map/SelectionOverlay";
 import L from "leaflet";
 import { ItemMarker } from "./ItemMarker";
 import { renderToString } from "react-dom/server";
+import {useChatMutation} from "@/store/services/chatApi";
 
 const Map = (props) => {
   const { position, placesData: places } = props;
-
+  const icon = L.icon({iconUrl: "/images/marker-icon.png"});
+  const [preferences, setPreferences] = useState([]);
   const mapRef = useRef();
+  const [chat, { isLoading, isSuccess, data, error }] = useChatMutation();
 
+  useEffect(() => {
+    fetch('/api/users')
+      .then(response => response.json())
+      .then((data)=>{
+        setPreferences(data.preferences)
+      })
+  }, []);
   useEffect(() => {
     // Wait until the map is initialized
     if (!mapRef.current) return;
@@ -58,12 +68,8 @@ const Map = (props) => {
     <div style={{ height: "100%" }}>
       <SelectionOverlay
         location={position}
-        chips={[
-          "cycling",
-          "jogging",
-          "military museum",
-          "soviet era related points of interest",
-        ]}
+        chips={preferences}
+        chat={chat}
       ></SelectionOverlay>
       <MapContainer
         ref={mapRef}
@@ -75,6 +81,9 @@ const Map = (props) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         ></TileLayer>
+        {data && data.places.map((item) => {
+          return <ItemMarker item={item} key={item.address} icon={icon} />;
+        })}
         <Marker position={position}>
           <Popup>You are here</Popup>
         </Marker>

@@ -1,56 +1,86 @@
-'use client'
-import {useEffect, useState} from "react";
-import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
+"use client";
+
+// IMPORTANT: the order matters!
 import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css"; // Re-uses images from ~leaflet package
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
 import "leaflet-defaulticon-compatibility";
-import {mapResults} from "@/components/Map/mockResults";
-import {ItemMarker} from "@/components/Map/ItemMarker";
+
+import { useRef, useEffect } from "react";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { SelectionOverlay } from "@/components/Map/SelectionOverlay";
 import L from "leaflet";
+import { ItemMarker } from "./ItemMarker";
+import { renderToString } from "react-dom/server";
 
-export const Map = (props) => {
-  const {position: initialPosition} = props;
-  const icon = L.icon({iconUrl: "/images/marker-icon.png"});
+const Map = (props) => {
+  const { position, placesData: places } = props;
 
-  const [position, setPosition] = useState(initialPosition); // State to store user's position
-  const [loading, setLoading] = useState(true);  // Loading state for geolocation
+  const mapRef = useRef();
 
   useEffect(() => {
-    // Get user's location
-    navigator.geolocation.getCurrentPosition(
-      (location) => {
-        const {latitude, longitude} = location.coords;
-        setPosition([latitude, longitude]); // Update position state with coordinates
-        setLoading(false);
-      },
-      (error) => {
-        console.error("Error getting location: ", error);
-        setLoading(false);
-      }
-    );
-  }, []);
+    // Wait until the map is initialized
+    if (!mapRef.current) return;
 
-  if (loading) {
-    return <div>Loading map...</div>; // Show a loading state
-  }
+    console.log("Running effect", places);
+    // Add new markers for the data received
+    const markers = places.map((item) => {
+      const marker = L.marker([
+        item.coordinates.latitude,
+        item.coordinates.longitude,
+      ]);
+      marker.bindPopup(
+        // Remove this useEffect if ItemMarker is used and cleanup for Layers is possible in other way
+        renderToString(
+          <>
+            <h2>{item.name}</h2>
+            <p>{item.address}</p>
+            <p>{item.justification}</p>
+            working hours: <b>0:00</b>- <b>0:00</b>
+          </>,
+        ),
+      );
+      marker.bindTooltip(item.name);
+      marker.addTo(mapRef.current); // Adds marker to the map
+      return marker;
+    });
+
+    // Cleanup function to remove markers when data changes
+    return () => {
+      markers.forEach((marker) => mapRef.current.removeLayer(marker));
+    };
+  }, [places]); // Runs whenever data changes
 
   if (!position) {
     return <div>Unable to retrieve your location</div>; // Handle error state
   }
-  return (<div>
-    <MapContainer
-      style={{height: 'calc(100vh - 60px)'}} center={position} zoom={13} scrollWheelZoom={false}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"></TileLayer>
-      {
-        mapResults.map((item) => {
-          return <ItemMarker item={item} key={item.id} icon={icon}/>
-        })
-      }
-      <Marker position={position} icon={icon}>
-        <Popup>You are here</Popup>
-      </Marker>
-    </MapContainer>,
-  </div>)
-}
+
+  return (
+    <div style={{ height: "100%" }}>
+      <SelectionOverlay
+        location={position}
+        chips={[
+          "cycling",
+          "jogging",
+          "military museum",
+          "soviet era related points of interest",
+        ]}
+      ></SelectionOverlay>
+      <MapContainer
+        ref={mapRef}
+        style={{ height: "100%" }}
+        center={position}
+        zoom={13}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        ></TileLayer>
+        <Marker position={position}>
+          <Popup>You are here</Popup>
+        </Marker>
+      </MapContainer>
+    </div>
+  );
+};
+
+export default Map;

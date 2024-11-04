@@ -3,9 +3,10 @@ import {Marker, Popup, Tooltip, useMap} from "react-leaflet";
 import {useEffect, useRef, useState} from "react";
 
 export const ItemMarker = (props) => {
-  const {item: {title, lat, lng, start_timestamp, end_timestamp, description}, icon} = props;
+  const {item: {name = '', address, coordinates, start_timestamp = '00:00', end_timestamp = '00:00', description= ''}, icon} = props;
+  const {latitude: lat, longitude: lng, } = coordinates;
   const map = useMap();
-
+  console.log(name, description, lat, lng);
   const [refReady, setRefReady] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   let markerRef = useRef();
@@ -23,12 +24,12 @@ export const ItemMarker = (props) => {
     });
   }, [markerRef]);
 
-  return (<Marker ref={markerRef} icon={icon} position={[lng, lat]} eventHandlers={{
+  return (<Marker ref={markerRef} icon={icon} position={[lat, lng]} eventHandlers={{
     click: () => {
       setIsOpened(true);
     },
   }}>
-    {!isOpened && <Tooltip opacity={1} direction="bottom" offset={[14, 40]} permanent>{title}</Tooltip> }
+    {!isOpened && <Tooltip opacity={1} direction="bottom" offset={[14, 40]} permanent>{name}</Tooltip> }
     <Popup
 
       ref={(r) => {
@@ -36,8 +37,9 @@ export const ItemMarker = (props) => {
         setRefReady(true);
       }}
     >
-      <h2>{title}</h2>
+      <h2>{name}</h2>
       <p>{description}</p>
+      <p>{address}</p>
       working hours: <b>{start_timestamp}</b>- <b>{end_timestamp}</b>
 
     </Popup>

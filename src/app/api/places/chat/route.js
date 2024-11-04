@@ -1,10 +1,11 @@
 import { generateText } from "ai";
 import { createOllama } from "ollama-ai-provider";
+import { AIModel } from "@/app/constants";
 
 const generateGoogleFindUrlUsingLLM = async (userLocationString, messages) => {
   const llama = createOllama();
   return generateText({
-    model: llama("openhermes2.5-mistral"),
+    model: llama(AIModel),
     system: `Your only task is to construct a valid Google Find Place API URL. 
     You are allowed to use information provided in system prompt and the conversation.
 
@@ -30,7 +31,7 @@ const generateGoogleFindUrlUsingLLM = async (userLocationString, messages) => {
 const askForMoreInformation = async (userLocationString, messages) => {
   const llama = createOllama();
   return await generateText({
-    model: llama("openhermes2.5-mistral"),
+    model: llama(AIModel),
     system: `Your task is to ask the user for more information so that you can construct a Google Find Place API URL. You can also use any information provided in the system prompt to generate the API URL.
     
     ${userLocationString}
@@ -65,7 +66,7 @@ export async function POST(req) {
   const userLocationString = `The location of the user is latitude ${data.location.latitude} and longitude ${data.location.longitude}.`;
 
   const { text: validateConversation } = await generateText({
-    model: llama("openhermes2.5-mistral"),
+    model: llama(AIModel),
     system: `Your task is to validate if the system prompt and conversation together contains enough information to construct a Google Find Place API request. 
     
     ${userLocationString}

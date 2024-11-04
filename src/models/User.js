@@ -1,10 +1,33 @@
 import mongoose from 'mongoose';
 const userSchema = new mongoose.Schema({
-    username: {
+  firstName: {
       type: String,
       required: true,
       unique: true
     },
+    lastName: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    countryOfOrigin: {
+      type: String,
+      required: true,
+    },
+    countryCode: {
+      type: String,
+      required: true,
+    },
+    photo: {
+      type: String,
+    },
+    currentLocation: {
+      city: {
+        type: String,
+        required: true
+      },
+    },
+
     preferences: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Preference'

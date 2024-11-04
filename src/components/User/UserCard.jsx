@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Typography, Avatar, Grid, Card, CardContent } from '@mui/material';
 
 const UserCard = ({ user }) => {
+  console.log(user);
   return (
     <Card sx={{ width: '90%', p: 2, display: 'flex', boxShadow: 3, bgcolor: 'lightGrey.main' }}>
       <CardContent sx={{ flex: 1 }}>

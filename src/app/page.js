@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import 'leaflet/dist/leaflet.css';
+
 export default function Page() {
   const [location, setLocation] = useState(null);
   const [input, setInput] = useState("");

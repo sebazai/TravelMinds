@@ -22,7 +22,7 @@ MONGODB_URI="<ask for connection string>"
 
 [Ollama](https://ollama.com/)
 
-Run `ollama pull openhermes2.5-mistral`
+Run `ollama pull openhermes`
 
 ### Optional
 

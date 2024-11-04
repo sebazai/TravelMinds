@@ -21,7 +21,7 @@ const PlaceCard = ({ title, description, image, rate }) => {
       <CardMedia
         component="img"
         sx={{ width: '23%' }}
-        image={image}
+        image={image} 
         alt={title}
       />
       
@@ -35,7 +35,7 @@ const PlaceCard = ({ title, description, image, rate }) => {
         <Grid container sx={{ marginY: 1 }}>
           <Rating
             name="place-rating"
-            value={Number(rate)} 
+            value={Number(rate)}  
             precision={0.1} 
             readOnly
             sx={{ color: "orange.main" }}

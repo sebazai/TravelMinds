@@ -2,7 +2,7 @@ import React from 'react';
 import PlaceCard from "./PlaceCard";
 import { Box } from '@mui/material';
 
-const PlaceList = ({ places }) => {
+const PlaceList = ({ favorites }) => {
     return (
       <Box
         sx={{
@@ -11,13 +11,13 @@ const PlaceList = ({ places }) => {
           padding: 2             
         }}
       >
-        {places.map((place, index) => (
+        {favorites.map((favorite, index) => (
           <PlaceCard
             key={index}
-            title={place.title}
-            description={place.description}
-            image={place.image}
-            rate={place.rate}
+            title={favorite.title}
+            description={favorite.description}
+            image={favorite.photo}  
+            rate={favorite.rating} 
           />
         ))}
       </Box>

@@ -1,14 +1,16 @@
 import mongoose from 'mongoose';
-const userSchema = new mongoose.Schema({
-    username: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    preferences: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Preference'
-    }]
-  });
+import { Preference } from './Preference.js';
 
-  export const User = mongoose.models.User || mongoose.model('User', userSchema);
+const userSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  preferences: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Preference'
+  }]
+});
+
+export const User = mongoose.models.User || mongoose.model('User', userSchema);

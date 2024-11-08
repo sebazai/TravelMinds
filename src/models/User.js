@@ -8,7 +8,13 @@ const userSchema = new mongoose.Schema({
     preferences: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Preference'
-    }]
+    }],
+    favorites:[
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Favorite'
+      }
+    ]
   });
 
   export const User = mongoose.models.User || mongoose.model('User', userSchema);

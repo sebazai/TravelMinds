@@ -1,12 +1,14 @@
 import { connectToDataBase } from "@/app/lib/db";
 import { User } from '@/models/User';
 import { NextResponse } from 'next/server';
-import { Preference } from '@/models/Preference';
+import { Favorite } from "@/models/Favorite"; 
+import { Preference } from "@/models/Preference";
+
 
 export async function GET() {
   try {
     await connectToDataBase();
-    const users = await User.findOne().populate('preferences');
+    const users = await User.findOne().populate('preferences').populate('favorites');
     return NextResponse.json(users);
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

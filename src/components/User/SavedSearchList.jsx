@@ -19,7 +19,7 @@ const SavedSearchList = ({ savedSearches }) => {
             key={index}
             title={search.title}
             description={search.description}
-            icon={search.image}
+            icon={search.icon}
           />
         ))}
       </Container>

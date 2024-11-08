@@ -8,26 +8,26 @@
       "currentLocation": {
         "city": "Paris"
       },
-      "savedSearches": [
+      "preferences": [
         {
           "title": "Bike shops",
           "description": "Find bike shops near my current location.",
-          "image": "https://www.gstatic.com/images/icons/material/system_gm/1x/directions_bike_black_48dp.png"
+          "icon": "Home"
         },
         {
           "title": "Veg restaurants",
           "description": "List of vegetarian restaurants nearby.",
-          "image": "https://www.gstatic.com/images/icons/material/system_gm/1x/restaurant_black_48dp.png"
+          "icon": "Add"
         },
         {
           "title": "Late gyms",
           "description": "Find sports centers open after 10 PM.",
-          "image": "https://www.gstatic.com/images/icons/material/system_gm/1x/fitness_center_black_48dp.png"
+          "icon": "Home"
         },
         {
           "title": "Cinemas nearby",
           "description": "Search for available cinemas around me.",
-          "image": "https://www.gstatic.com/images/icons/material/system_gm/1x/local_movies_black_48dp.png"
+          "icon": "https://www.gstatic.com/images/icons/material/system_gm/1x/local_movies_black_48dp.png"
         }
       ]
     }

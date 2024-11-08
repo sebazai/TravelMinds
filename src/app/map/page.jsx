@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import SearchBar from "@/components/Map/SearchBar";
 
 const Map = dynamic(() => import("@/components/Map/Map"), {
   loading: () => <p>The great map of Earth is loading...</p>,

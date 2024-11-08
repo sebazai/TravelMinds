@@ -6,11 +6,12 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 
 import { useRef, useEffect } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, ZoomControl } from "react-leaflet";
 import { SelectionOverlay } from "@/components/Map/SelectionOverlay";
 import L from "leaflet";
 import { ItemMarker } from "./ItemMarker";
 import { renderToString } from "react-dom/server";
+import { SearchBar } from "./SearchBar";
 
 const Map = (props) => {
   const { position, placesData: places } = props;
@@ -56,30 +57,35 @@ const Map = (props) => {
 
   return (
     <div style={{ height: "100%" }}>
-      <SelectionOverlay
-        location={position}
-        chips={[
-          "cycling",
-          "jogging",
-          "military museum",
-          "soviet era related points of interest",
-        ]}
-      ></SelectionOverlay>
-      <MapContainer
-        ref={mapRef}
-        style={{ height: "100%" }}
-        center={position}
-        zoom={13}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        ></TileLayer>
-        <Marker position={position}>
-          <Popup>You are here</Popup>
-        </Marker>
-      </MapContainer>
-    </div>
+      <SearchBar />
+      
+        <SelectionOverlay
+          location={position}
+          chips={[
+            "cycling",
+            "jogging",
+            "military museum",
+            "soviet era related points of interest",
+          ]}
+        ></SelectionOverlay>
+
+        <MapContainer
+          ref={mapRef}
+          style={{ height: "100%" }}
+          center={position}
+          zoom={13}
+          zoomControl={false} // Disable default zoom control
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          ></TileLayer>
+          <Marker position={position}>
+            <Popup>You are here</Popup>
+          </Marker>
+        </MapContainer>
+      </div>
+    
   );
 };
 

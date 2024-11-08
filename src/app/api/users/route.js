@@ -8,7 +8,7 @@ import { Preference } from "@/models/Preference";
 export async function GET() {
   try {
     await connectToDataBase();
-    const users = await User.find().populate('preferences').populate('favorites');
+    const users = await User.findOne().populate('preferences').populate('favorites');
     return NextResponse.json(users);
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

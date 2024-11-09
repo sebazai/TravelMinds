@@ -9,8 +9,8 @@ export async function GET(request, { params }) {
     await connectToDataBase();
     // Fetch user and populate both preferences and favorites
     const user = await User.findById(params.id)
-      .populate("preferences")
-      .populate("favorites"); 
+      .populate({ path: "preferences", model: Preference })
+      .populate({ path: "favorites", model: Favorite });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -35,8 +35,8 @@ export async function PUT(request, { params }) {
       new: true,
       runValidators: true,
     })
-      .populate("preferences")
-      .populate("favorites"); 
+      .populate({ path: "preferences", model: Preference })
+      .populate({ path: "favorites", model: Favorite });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });

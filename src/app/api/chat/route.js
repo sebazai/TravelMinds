@@ -1,7 +1,7 @@
-import { streamText } from "ai";
-import { NextResponse } from "next/server";
-import { createOllama } from "ollama-ai-provider";
-import { AIModel } from "@/app/constants";
+import { streamText } from 'ai';
+import { NextResponse } from 'next/server';
+import { createOllama } from 'ollama-ai-provider';
+import { AIModel } from '@/app/constants';
 
 export async function POST(req) {
   const llama = createOllama();

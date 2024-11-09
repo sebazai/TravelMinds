@@ -1,6 +1,6 @@
-import { generateText } from "ai";
-import { createOllama } from "ollama-ai-provider";
-import { AIModel } from "@/app/constants";
+import { generateText } from 'ai';
+import { createOllama } from 'ollama-ai-provider';
+import { AIModel } from '@/app/constants';
 
 const generateGoogleFindUrlUsingLLM = async (userLocationString, messages) => {
   const llama = createOllama();
@@ -45,7 +45,7 @@ const askForMoreInformation = async (userLocationString, messages) => {
 
 // Try naively three times to generate the freaking Google url, otherwise return null
 const fetchValidUrl = async (userLocationString, messages, attempt = 0) => {
-  const re = new RegExp("(http|https)://", "i");
+  const re = new RegExp('(http|https)://', 'i');
   if (attempt >= 3) return askForMoreInformation(userLocationString, messages);
 
   const LLMResponse = await generateGoogleFindUrlUsingLLM(
@@ -76,21 +76,21 @@ export async function POST(req) {
     messages,
   });
 
-  console.log("Valid: ", validateConversation);
+  console.log('Valid: ', validateConversation);
 
-  if (validateConversation.startsWith("No")) {
+  if (validateConversation.startsWith('No')) {
     const llmResult = await askForMoreInformation(userLocationString, messages);
     return Response.json({ messages: llmResult.responseMessages });
   }
 
-  const re = new RegExp("(http|https)://", "i");
+  const re = new RegExp('(http|https)://', 'i');
 
   const llmPerhapsValidUrl = await fetchValidUrl(userLocationString, messages);
 
   // Check if the LLM returned a URL
   if (re.test(llmPerhapsValidUrl.text)) {
     const text = llmPerhapsValidUrl.text;
-    const url = text.split("```")[1];
+    const url = text.split('```')[1];
 
     // Locationbias was very hard to get automatically encoded, therefore we will replace it with the encoded version
     // Regex capture locationbias and encode
@@ -104,11 +104,11 @@ export async function POST(req) {
       `locationbias=${locationBias}&`
     );
 
-    console.log("new url:", urlToDoRequestToGoogle);
+    console.log('new url:', urlToDoRequestToGoogle);
     const fetchResponse = await fetch(urlToDoRequestToGoogle);
     const fetchResponseData = await fetchResponse.json();
 
-    console.log("Google answer", JSON.stringify(fetchResponseData, null, 2));
+    console.log('Google answer', JSON.stringify(fetchResponseData, null, 2));
 
     return Response.json({
       // Return all messages except the last one???

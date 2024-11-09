@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export default function Page() {
   const [location, setLocation] = useState(null);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   useEffect(() => {
-    if ("geolocation" in navigator) {
+    if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(({ coords }) => {
         const { latitude, longitude } = coords;
         setLocation({ latitude, longitude });
@@ -24,16 +24,16 @@ export default function Page() {
           setInput(event.target.value);
         }}
         onKeyDown={async (event) => {
-          if (event.key === "Enter") {
+          if (event.key === 'Enter') {
             setMessages((currentMessages) => [
               ...currentMessages,
-              { role: "user", content: input },
+              { role: 'user', content: input },
             ]);
 
-            const response = await fetch("/api/places/chat", {
-              method: "POST",
+            const response = await fetch('/api/places/chat', {
+              method: 'POST',
               body: JSON.stringify({
-                messages: [...messages, { role: "user", content: input }],
+                messages: [...messages, { role: 'user', content: input }],
                 data: { location },
               }),
             });
@@ -52,14 +52,14 @@ export default function Page() {
 
       {messages.map((message, index) => (
         <div key={`${message.role}-${index}`}>
-          {message.role === "user" ? "User: " : "AI: "}
-          {typeof message.content === "string"
+          {message.role === 'user' ? 'User: ' : 'AI: '}
+          {typeof message.content === 'string'
             ? message.content
             : message.content
-                .filter((part) => part.type === "text")
-                .map((part, partIndex) => (
-                  <span key={partIndex}>{part.text}</span>
-                ))}
+              .filter((part) => part.type === 'text')
+              .map((part, partIndex) => (
+                <span key={partIndex}>{part.text}</span>
+              ))}
         </div>
       ))}
     </div>

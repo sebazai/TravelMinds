@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   TextField,
   Button,
@@ -9,20 +9,20 @@ import {
   Paper,
   Typography,
   Box,
-} from "@mui/material";
+} from '@mui/material';
 
-import { IconPicker } from "@/components/IconPicker/IconPicker";
+import { IconPicker } from '@/components/IconPicker/IconPicker';
 
 export default function FormPage() {
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    icon: "home",
+    title: '',
+    description: '',
+    icon: 'home',
   });
 
   useEffect(() => {
-    const description = searchParams.get("description");
+    const description = searchParams.get('description');
     if (description) {
       setFormData((prev) => ({
         ...prev,
@@ -42,21 +42,21 @@ export default function FormPage() {
 
     fetchFirstUser().then((userId) => {
       fetch('/api/preferences', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: formData.title,
-        description: formData.description,
-        icon: formData.icon,
-        createdBy: userId
-      })
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: formData.title,
+          description: formData.description,
+          icon: formData.icon,
+          createdBy: userId
+        })
       });
     });
 
     setFormData({
-      title: "",
-      description: "",
-      icon: "home",
+      title: '',
+      description: '',
+      icon: 'home',
     });
 
   };

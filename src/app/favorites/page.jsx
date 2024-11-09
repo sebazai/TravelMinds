@@ -1,14 +1,14 @@
-"use client";
-import PlaceList from "@/components/favorites/PlaceList"; 
+'use client';
+import PlaceList from '@/components/favorites/PlaceList'; 
 import { CircularProgress, Box } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import FavoritesBanner from "@/components/favorites/Favoritebanner";
+import FavoritesBanner from '@/components/favorites/Favoritebanner';
 
 
 
 export default function Page() {
   //have to be change to get the current id 
-  const userId = "671e08152b900f9b6025e9c2";
+  const userId = '671e08152b900f9b6025e9c2';
 
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -48,9 +48,9 @@ export default function Page() {
     <div>
       <FavoritesBanner />
       <Box sx={{ marginTop: '70px', paddingX: 2 }}>
-      <PlaceList favorites={userData.favorites} />
+        <PlaceList favorites={userData.favorites} />
 
-     </Box>
+      </Box>
     </div>
-  )
+  );
 }

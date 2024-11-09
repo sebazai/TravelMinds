@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useChat } from "ai/react";
+import { useChat } from 'ai/react';
 
 // Default chat with stream type of chatting, no speciality here, just so you can easily test out LLM's
 export default function Page() {
@@ -9,7 +9,7 @@ export default function Page() {
     <div>
       {messages.map((m) => (
         <div key={m.id}>
-          {m.role === "user" ? "User: " : "AI: "}
+          {m.role === 'user' ? 'User: ' : 'AI: '}
           {m.content}
         </div>
       ))}

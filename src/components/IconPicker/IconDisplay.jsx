@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Typography } from "@mui/material";
+import React from 'react';
+import { Box, Typography } from '@mui/material';
 import {
   Home,
   Settings,
@@ -39,7 +39,7 @@ import {
   AccessTime,
   Lock,
   Help,
-} from "@mui/icons-material";
+} from '@mui/icons-material';
 
 const iconMap = {
   Home,

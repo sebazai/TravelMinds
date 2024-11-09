@@ -38,3 +38,25 @@ You should see:
 `Pinged your deployment. You successfully connected to MongoDB!` once you are connected to DB succesfully.
 
 Url is `localhost:3000`
+
+## Seeding the Database
+
+To seed the database with a sample user and preferences, run the following command:
+
+```bash
+npm run seed
+
+This script will:
+
+    Connect to the MongoDB database specified in your .env.local file.
+    Clear the existing users in the database.
+    Add a sample user with predefined preferences.
+
+**Notes:**
+
+- Ensure that your `.env.local` file contains the `MONGODB_URI` pointing to your MongoDB instance.
+- The path to the `User` model in the `seed.js` script (`./src/models/User.js`) should be adjusted based on your project's directory structure.
+- Before running the seed script, make sure all dependencies are installed by executing `npm install`.
+
+By following these steps, you'll set up a seed script that initializes your MongoDB database with a sample user and preferences, facilitating development and testing.
+ 

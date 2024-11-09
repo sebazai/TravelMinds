@@ -27,6 +27,9 @@ async function seedDatabase() {
       lastName: "Doe",
       countryOfOrigin: "United States",
       countryCode: "US",
+      currentLocation: {
+        city: "New York",
+      },
       preferences: [],
     });
     await newUser.save();

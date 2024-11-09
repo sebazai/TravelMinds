@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const preferenceSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true
+    required: true,
   },
   description: {
     type: String,
@@ -14,9 +14,10 @@ const preferenceSchema = new mongoose.Schema({
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
-  }
+    ref: "User",
+    required: true,
+  },
 });
-  
-export const Preference = mongoose.models.Preference || mongoose.model('Preference', preferenceSchema);
+
+export const Preference =
+  mongoose.models.Preference || mongoose.model("Preference", preferenceSchema);

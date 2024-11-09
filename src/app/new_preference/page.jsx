@@ -37,7 +37,7 @@ export default function FormPage() {
     const fetchFirstUser = async () => {
       const response = await fetch('/api/users');
       const data = await response.json();
-      return data[0]?._id || 'USER_ID'; 
+      return data._id || 'USER_ID'; 
     };
 
     fetchFirstUser().then((userId) => {

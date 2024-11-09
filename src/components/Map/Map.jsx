@@ -81,9 +81,10 @@ const Map = (props) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         ></TileLayer>
-        {data && data.places.map((item) => {
-          return <ItemMarker item={item} key={item.address} icon={icon} />;
-        })}
+        {data &&
+          data.places.map((item) => {
+            return <ItemMarker item={item} key={item.address} icon={icon} />;
+          })}
         <Marker position={position}>
           <Popup>You are here</Popup>
         </Marker>

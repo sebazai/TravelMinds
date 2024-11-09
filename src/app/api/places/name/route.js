@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
 export async function POST(req) {
   const request = await req.json();
@@ -11,6 +11,6 @@ export async function POST(req) {
   );
   const json = await result.json();
   const street_address =
-    json.results?.[0]?.formatted_address ?? json["plus_code"].compound_code;
+    json.results?.[0]?.formatted_address ?? json['plus_code'].compound_code;
   return NextResponse.json({ location: street_address });
 }

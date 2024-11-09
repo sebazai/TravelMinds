@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const favoriteSchema = new mongoose.Schema(
   {
@@ -9,7 +9,7 @@ const favoriteSchema = new mongoose.Schema(
     photo: { type: String, required: true },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
     },
   },
@@ -17,4 +17,4 @@ const favoriteSchema = new mongoose.Schema(
 );
 
 export const Favorite =
-  mongoose.models.Favorite || mongoose.model("Favorite", favoriteSchema);
+  mongoose.models.Favorite || mongoose.model('Favorite', favoriteSchema);

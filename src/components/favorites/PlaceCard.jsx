@@ -38,7 +38,7 @@ const PlaceCard = ({ title, description, image, rate }) => {
             value={Number(rate)}  
             precision={0.1} 
             readOnly
-            sx={{ color: "orange.main" }}
+            sx={{ color: 'orange.main' }}
           />
         </Grid>
         

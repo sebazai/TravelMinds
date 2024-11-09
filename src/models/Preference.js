@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 const preferenceSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -6,18 +6,18 @@ const preferenceSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    default: "",
+    default: '',
   },
   icon: {
     type: String,
-    default: "",
+    default: '',
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     required: true,
   },
 });
 
 export const Preference =
-  mongoose.models.Preference || mongoose.model("Preference", preferenceSchema);
+  mongoose.models.Preference || mongoose.model('Preference', preferenceSchema);

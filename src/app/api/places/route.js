@@ -1,12 +1,12 @@
-import { generateText } from "ai";
-import { NextResponse } from "next/server";
-import { createOllama } from "ollama-ai-provider";
-import { AIModel } from "@/app/constants";
+import { generateText } from 'ai';
+import { NextResponse } from 'next/server';
+import { createOllama } from 'ollama-ai-provider';
+import { AIModel } from '@/app/constants';
 
 export async function POST(req) {
   const llama = createOllama();
   const request = await req.json();
-  console.log("/api/places", request);
+  console.log('/api/places', request);
   const { prompt, data } = request;
 
   const systemPrompt = `You are a helpful tour guide.
@@ -27,17 +27,17 @@ export async function POST(req) {
     Please wrap your JSON output in three backticks. The JSON should only contain one key named "places" and the value being the an array of places. Ensure there are no duplicate places. 
     `;
 
-  console.log("System:", systemPrompt);
-  console.log("User prompt:", prompt);
+  console.log('System:', systemPrompt);
+  console.log('User prompt:', prompt);
   const { text } = await generateText({
     model: llama(AIModel),
     system: systemPrompt,
     prompt,
   });
 
-  console.log("LLM Output:", text);
+  console.log('LLM Output:', text);
 
-  const json = text.split("```")[1];
-  const resp = JSON.parse(json.startsWith("json") ? json.slice(4) : json);
+  const json = text.split('```')[1];
+  const resp = JSON.parse(json.startsWith('json') ? json.slice(4) : json);
   return NextResponse.json(resp);
 }

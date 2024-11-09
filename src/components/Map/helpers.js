@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export const  isLocationOpen = (start_timestamp, end_timestamp) => {
   const now = dayjs();
@@ -7,4 +7,4 @@ export const  isLocationOpen = (start_timestamp, end_timestamp) => {
   const endTime = dayjs().hour(parseInt(end_timestamp.split(':')[0])).minute(parseInt(end_timestamp.split(':')[1]));
 
   return now.isAfter(startTime) && now.isBefore(endTime);
-}
+};

@@ -1,12 +1,11 @@
-"use client"
-import {Marker, Popup, Tooltip, useMap} from "react-leaflet";
-import {useEffect, useRef, useState} from "react";
+'use client';
+import {Marker, Popup, Tooltip, useMap} from 'react-leaflet';
+import {useEffect, useRef, useState} from 'react';
 
 export const ItemMarker = (props) => {
   const {item: {name = '', address, coordinates, start_timestamp = '00:00', end_timestamp = '00:00', description= ''}, icon} = props;
   const {latitude: lat, longitude: lng, } = coordinates;
   const map = useMap();
-  console.log(name, description, lat, lng);
   const [refReady, setRefReady] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   let markerRef = useRef();
@@ -43,5 +42,5 @@ export const ItemMarker = (props) => {
       working hours: <b>{start_timestamp}</b>- <b>{end_timestamp}</b>
 
     </Popup>
-  </Marker>)
-}
+  </Marker>);
+};

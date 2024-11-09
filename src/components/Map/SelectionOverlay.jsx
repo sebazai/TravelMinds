@@ -1,5 +1,5 @@
-import { Box, Chip } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Box, Chip } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import * as MuiIcons from '@mui/icons-material';
 
 const useStyles = makeStyles({
@@ -38,20 +38,20 @@ const useStyles = makeStyles({
 
 export const SelectionOverlay = (props) => {
   const {chips, location, chat} = props;
-  const classes = useStyles()
+  const classes = useStyles();
   const onClick = (chip) => {
-    chat({messages: [{role: "user", content: chip.description}], location});
-  }
+    chat({messages: [{role: 'user', content: chip.description}], location});
+  };
   const chipsComponents = chips.map((chip, index) => {
     const IconComponent = MuiIcons[chip.icon];
     return (<Chip
-      icon={IconComponent ? <IconComponent color={"#000"}/> : null}
+      icon={IconComponent ? <IconComponent color={'#000'}/> : null}
       onClick={() => onClick(chip)}
       key={index}
       className={classes.chip}
       label={chip.title}
       clickable
-    />)
+    />);
   });
 
 
@@ -60,4 +60,4 @@ export const SelectionOverlay = (props) => {
       {chipsComponents}
     </Box>
   );
-}
+};

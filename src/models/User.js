@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import { Preference } from "./Preference.js";
+import mongoose from 'mongoose';
+import { Preference } from './Preference.js';
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -38,15 +38,15 @@ const userSchema = new mongoose.Schema({
   preferences: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Preference",
+      ref: 'Preference',
     },
   ],
   favorites: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Favorite",
+      ref: 'Favorite',
     },
   ],
 });
 
-export const User = mongoose.models.User || mongoose.model("User", userSchema);
+export const User = mongoose.models.User || mongoose.model('User', userSchema);

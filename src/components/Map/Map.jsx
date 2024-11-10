@@ -12,21 +12,14 @@ import L from 'leaflet';
 import { ItemMarker } from './ItemMarker';
 import { renderToString } from 'react-dom/server';
 import { useChatMutation } from '@/store/services/chatApi';
+import { useGetUserQuery } from '@/store/services/userApi.js';
 
 const Map = (props) => {
   const { position, placesData: places } = props;
   const icon = L.icon({ iconUrl: '/images/marker-icon.png' });
-  const [preferences, setPreferences] = useState([]);
   const mapRef = useRef();
   const [chat, { isLoading, isSuccess, data, error }] = useChatMutation();
-
-  useEffect(() => {
-    fetch('/api/users')
-      .then((response) => response.json())
-      .then((data) => {
-        setPreferences(data.preferences);
-      });
-  }, []);
+  const {data: userData} = useGetUserQuery();
   useEffect(() => {
     // Wait until the map is initialized
     if (!mapRef.current) return;
@@ -68,11 +61,11 @@ const Map = (props) => {
 
   return (
     <div style={{ height: '100%' }}>
-      <SelectionOverlay
+      {userData && <SelectionOverlay
         location={position}
-        chips={preferences}
+        chips={userData.preferences}
         chat={chat}
-      ></SelectionOverlay>
+      ></SelectionOverlay> }
       <MapContainer
         ref={mapRef}
         style={{ height: '100%' }}

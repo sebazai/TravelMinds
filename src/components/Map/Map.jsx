@@ -31,6 +31,8 @@ const Map = (props) => {
     // Wait until the map is initialized
     if (!mapRef.current) return;
 
+    const mapInstance = mapRef.current;
+
     console.log('Running effect', places);
     // Add new markers for the data received
     const markers = places.map((item) => {
@@ -50,13 +52,13 @@ const Map = (props) => {
         ),
       );
       marker.bindTooltip(item.name);
-      marker.addTo(mapRef.current); // Adds marker to the map
+      marker.addTo(mapInstance); // Adds marker to the map
       return marker;
     });
 
     // Cleanup function to remove markers when data changes
     return () => {
-      markers.forEach((marker) => mapRef.current.removeLayer(marker));
+      markers.forEach((marker) => mapInstance.removeLayer(marker));
     };
   }, [places]); // Runs whenever data changes
 

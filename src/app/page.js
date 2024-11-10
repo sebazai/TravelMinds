@@ -1,23 +1,54 @@
+/* eslint-disable indent */
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useLocation } from '@/hooks/useLocation';
+import dynamic from 'next/dynamic';
+
+const Map = dynamic(() => import('@/components/Map/Map'), {
+  loading: () => <p>The great map of Earth is loading...</p>,
+  ssr: false,
+});
 
 export default function Page() {
-  const [location, setLocation] = useState(null);
+  const { location, position, isLoading, error } = useLocation();
   const [input, setInput] = useState('');
+  const [places, setPlaces] = useState([]); // State to store places
   const [messages, setMessages] = useState([]);
-  useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(({ coords }) => {
-        const { latitude, longitude } = coords;
-        setLocation({ latitude, longitude });
-      });
-    }
-  }, []);
+
+  const fetchPlaces = async (input) => {
+    const response = await fetch('/api/places', {
+      method: 'POST',
+      body: JSON.stringify({
+        prompt: input,
+        data: { location: location },
+      }),
+    });
+
+    const places = await response.json();
+    const enrichPlaces = await Promise.all(
+      places.places.map(async (place) => {
+        const addressToLatLon = await fetch('/api/places/address', {
+          method: 'POST',
+          body: JSON.stringify({ address: place.address }),
+        });
+        const data = await addressToLatLon.json();
+        return {
+          ...place,
+          address: data.address,
+          coordinates: {
+            latitude: data.latitude,
+            longitude: data.longitude,
+          },
+        };
+      }),
+    );
+    setPlaces(enrichPlaces);
+  };
 
   return (
-    <div>
-      <p>Location: {JSON.stringify(location)}</p>
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <p>Location: {location}</p>
       <input
         value={input}
         onChange={(event) => {
@@ -34,13 +65,26 @@ export default function Page() {
               method: 'POST',
               body: JSON.stringify({
                 messages: [...messages, { role: 'user', content: input }],
-                data: { location },
+                data: { position, location },
               }),
             });
 
             const { messages: newMessages, ...rest } = await response.json();
 
             console.log(rest);
+            setPlaces(
+              rest.googleData.candidates.map((place) => {
+                return {
+                  name: place.name,
+                  address: place.formatted_address,
+                  justification: '',
+                  coordinates: {
+                    latitude: place.geometry.location.lat,
+                    longitude: place.geometry.location.lng,
+                  },
+                };
+              }),
+            );
 
             setMessages((currentMessages) => [
               ...currentMessages,
@@ -62,6 +106,14 @@ export default function Page() {
                 ))}
         </div>
       ))}
+
+      {position && (
+        <Map
+          position={position}
+          placesData={places}
+          fetchPlaces={fetchPlaces}
+        />
+      )}
     </div>
   );
 }

@@ -63,7 +63,7 @@ export async function POST(req) {
   const request = await req.json();
   const { messages, data } = request;
 
-  const userLocationString = `The location of the user is latitude ${data.location.latitude} and longitude ${data.location.longitude}.`;
+  const userLocationString = `The location of the user is ${data.location}. The coordinates are latitude ${data.position.latitude}, longitude ${data.position.longitude}.`;
 
   const { text: validateConversation } = await generateText({
     model: llama(AIModel),
@@ -90,7 +90,10 @@ export async function POST(req) {
   // Check if the LLM returned a URL
   if (re.test(llmPerhapsValidUrl.text)) {
     const text = llmPerhapsValidUrl.text;
-    const url = text.split('```')[1];
+    const url = text.split('```')[1] ?? text;
+
+    console.log('Text:', text);
+    console.log('Found url:', url);
 
     // Locationbias was very hard to get automatically encoded, therefore we will replace it with the encoded version
     // Regex capture locationbias and encode

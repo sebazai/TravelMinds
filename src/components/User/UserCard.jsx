@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import {
   Box,
   Typography,
@@ -44,10 +45,12 @@ const UserCard = ({ user }) => {
           <Grid item xs={10}>
             <Box display="flex" alignItems="center" mb={1}>
               {user.countryCode && (
-                <img
+                <Image
                   src={`https://flagcdn.com/w320/${user.countryCode.toLowerCase()}.png`}
                   alt={user.countryOfOrigin}
-                  style={{ width: '1.5em', marginRight: '8px' }}
+                  style={{ marginRight: '8px' }}
+                  width={20}
+                  height={15}
                 />
               )}
               <Typography

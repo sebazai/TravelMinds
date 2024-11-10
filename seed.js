@@ -9,8 +9,8 @@ dotenv.config({ path: '.env.local' });
 async function seedDatabase() {
   try {
     await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true, // Can be removed if you're using Mongoose v6+
-      useUnifiedTopology: true, // Can be removed if you're using Mongoose v6+
+      dbName: 'travelminds',
+      useUnifiedTopology: true,
     });
     console.log('Connected to database:', mongoose.connection.name);
 

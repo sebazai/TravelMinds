@@ -3,8 +3,8 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { NavBar } from '@/components/NavBar/NavBar';
-import {Provider} from 'react-redux';
-import {store} from '@/store/store';
+import { Provider } from 'react-redux';
+import { store } from '@/store/store';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -49,12 +49,11 @@ export const colorTheme = createTheme({
   },
 });
 
-export default function RootLayout({children}) {
-
+export default function RootLayout({ children }) {
   return (
     <Provider store={store}>
       <ThemeProvider theme={colorTheme}>
-        <CssBaseline/>
+        <CssBaseline />
         <html lang="en">
           <body
             style={{ height: '100vh' }}

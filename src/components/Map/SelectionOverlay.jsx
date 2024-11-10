@@ -30,34 +30,34 @@ const useStyles = makeStyles({
     overflowX: 'auto', // Enable horizontal scroll
     whiteSpace: 'nowrap', // Prevent line breaks
     padding: '8px 0',
-    '&::-webkit-scrollbar': {height: '6px'},
-    '&::-webkit-scrollbar-thumb': {backgroundColor: '#888', borderRadius: '10px'},
-    '&::-webkit-scrollbar-thumb:hover': {backgroundColor: '#555'},
-  }
+    '&::-webkit-scrollbar': { height: '6px' },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: '#888',
+      borderRadius: '10px',
+    },
+    '&::-webkit-scrollbar-thumb:hover': { backgroundColor: '#555' },
+  },
 });
 
 export const SelectionOverlay = (props) => {
-  const {chips, location, chat} = props;
+  const { chips, location, chat } = props;
   const classes = useStyles();
   const onClick = (chip) => {
-    chat({messages: [{role: 'user', content: chip.description}], location});
+    chat({ messages: [{ role: 'user', content: chip.description }], location });
   };
   const chipsComponents = chips.map((chip, index) => {
     const IconComponent = MuiIcons[chip.icon];
-    return (<Chip
-      icon={IconComponent ? <IconComponent color={'#000'}/> : null}
-      onClick={() => onClick(chip)}
-      key={index}
-      className={classes.chip}
-      label={chip.title}
-      clickable
-    />);
+    return (
+      <Chip
+        icon={IconComponent ? <IconComponent color={'#000'} /> : null}
+        onClick={() => onClick(chip)}
+        key={index}
+        className={classes.chip}
+        label={chip.title}
+        clickable
+      />
+    );
   });
 
-
-  return (
-    <Box className={classes.container}>
-      {chipsComponents}
-    </Box>
-  );
+  return <Box className={classes.container}>{chipsComponents}</Box>;
 };

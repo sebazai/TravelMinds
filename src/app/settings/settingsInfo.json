@@ -1,35 +1,34 @@
 {
-    "user": {
-      "lastName": "Doe",
-      "firstName": "John",
-      "countryOfOrigin": "France",
-      "countryCode": "FR", 
-      "photo": "https://img.icons8.com/ios/50/E5E5E2/user.png",
-      "currentLocation": {
-        "city": "Paris"
+  "user": {
+    "lastName": "Doe",
+    "firstName": "John",
+    "countryOfOrigin": "France",
+    "countryCode": "FR",
+    "photo": "https://img.icons8.com/ios/50/E5E5E2/user.png",
+    "currentLocation": {
+      "city": "Paris"
+    },
+    "preferences": [
+      {
+        "title": "Bike shops",
+        "description": "Find bike shops near my current location.",
+        "icon": "Home"
       },
-      "preferences": [
-        {
-          "title": "Bike shops",
-          "description": "Find bike shops near my current location.",
-          "icon": "Home"
-        },
-        {
-          "title": "Veg restaurants",
-          "description": "List of vegetarian restaurants nearby.",
-          "icon": "Add"
-        },
-        {
-          "title": "Late gyms",
-          "description": "Find sports centers open after 10 PM.",
-          "icon": "Home"
-        },
-        {
-          "title": "Cinemas nearby",
-          "description": "Search for available cinemas around me.",
-          "icon": "https://www.gstatic.com/images/icons/material/system_gm/1x/local_movies_black_48dp.png"
-        }
-      ]
-    }
+      {
+        "title": "Veg restaurants",
+        "description": "List of vegetarian restaurants nearby.",
+        "icon": "Add"
+      },
+      {
+        "title": "Late gyms",
+        "description": "Find sports centers open after 10 PM.",
+        "icon": "Home"
+      },
+      {
+        "title": "Cinemas nearby",
+        "description": "Search for available cinemas around me.",
+        "icon": "https://www.gstatic.com/images/icons/material/system_gm/1x/local_movies_black_48dp.png"
+      }
+    ]
   }
-  
+}

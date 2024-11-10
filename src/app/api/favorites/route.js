@@ -25,10 +25,9 @@ export async function POST(request) {
 
     const favorite = await Favorite.create(data);
 
-    await User.findByIdAndUpdate(
-      data.createdBy,
-      { $push: { favorites: favorite._id } } 
-    );
+    await User.findByIdAndUpdate(data.createdBy, {
+      $push: { favorites: favorite._id },
+    });
 
     return NextResponse.json(favorite, { status: 201 });
   } catch (error) {

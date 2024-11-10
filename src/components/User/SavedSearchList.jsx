@@ -1,18 +1,22 @@
 // src/components/User/SavedSearchList.jsx
 import React from 'react';
-import { Typography,Container } from '@mui/material';
+import { Typography, Container } from '@mui/material';
 import PreferenceCard from './PreferencesCard';
 
 const SavedSearchList = ({ savedSearches }) => {
   if (!Array.isArray(savedSearches)) {
-    return <Typography variant="body1">Any preferences for now... Add one here</Typography>;
+    return (
+      <Typography variant="body1">
+        Any preferences for now... Add one here
+      </Typography>
+    );
   }
 
   return (
     <>
-      <br/>
+      <br />
       <h2>My favorites researchs :</h2>
-      <br/>
+      <br />
       <Container>
         {savedSearches.map((search, index) => (
           <PreferenceCard
@@ -25,7 +29,6 @@ const SavedSearchList = ({ savedSearches }) => {
       </Container>
     </>
   );
-  
 };
 
 export default SavedSearchList;

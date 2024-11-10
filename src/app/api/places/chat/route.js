@@ -50,7 +50,7 @@ const fetchValidUrl = async (userLocationString, messages, attempt = 0) => {
 
   const LLMResponse = await generateGoogleFindUrlUsingLLM(
     userLocationString,
-    messages
+    messages,
   );
 
   return re.test(LLMResponse.text)
@@ -95,13 +95,13 @@ export async function POST(req) {
     // Locationbias was very hard to get automatically encoded, therefore we will replace it with the encoded version
     // Regex capture locationbias and encode
     const locationBias = encodeURIComponent(
-      url.match(/locationbias=(.*?)&/)[1]
+      url.match(/locationbias=(.*?)&/)[1],
     );
 
     // Regex replace locationbias with encoded locationbias in URL
     const urlToDoRequestToGoogle = url.replace(
       /locationbias=(.*?)&/,
-      `locationbias=${locationBias}&`
+      `locationbias=${locationBias}&`,
     );
 
     console.log('new url:', urlToDoRequestToGoogle);

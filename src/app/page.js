@@ -56,10 +56,10 @@ export default function Page() {
           {typeof message.content === 'string'
             ? message.content
             : message.content
-              .filter((part) => part.type === 'text')
-              .map((part, partIndex) => (
-                <span key={partIndex}>{part.text}</span>
-              ))}
+                .filter((part) => part.type === 'text')
+                .map((part, partIndex) => (
+                  <span key={partIndex}>{part.text}</span>
+                ))}
         </div>
       ))}
     </div>

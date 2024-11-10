@@ -3,7 +3,6 @@ import { Card, CardContent, Typography, CardMedia } from '@mui/material';
 import IconDisplay from '../IconPicker/IconDisplay';
 
 const PreferenceCard = ({ title, description, icon }) => {
-
   return (
     <Card
       sx={{
@@ -19,9 +18,8 @@ const PreferenceCard = ({ title, description, icon }) => {
       }}
     >
       <CardMedia
-        component={'div' }
+        component={'div'}
         alt={title}
-       
         sx={{
           width: '48px',
           height: '48px',

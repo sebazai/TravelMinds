@@ -6,9 +6,9 @@ const PlaceList = ({ favorites }) => {
   return (
     <Box
       sx={{
-        height: '82vh',       
-        overflowY: 'auto',     
-        padding: 2             
+        height: '82vh',
+        overflowY: 'auto',
+        padding: 2,
       }}
     >
       {favorites.map((favorite, index) => (
@@ -16,8 +16,8 @@ const PlaceList = ({ favorites }) => {
           key={index}
           title={favorite.title}
           description={favorite.description}
-          image={favorite.photo}  
-          rate={favorite.rating} 
+          image={favorite.photo}
+          rate={favorite.rating}
         />
       ))}
     </Box>

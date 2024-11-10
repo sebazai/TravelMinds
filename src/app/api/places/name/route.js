@@ -7,7 +7,7 @@ export async function POST(req) {
 
   const latlng = encodeURIComponent(`${data.latitude},${data.longitude}`);
   const result = await fetch(
-    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng}&result_type=neighborhood&key=${process.env.GOOGLE_API_KEY}`,
+    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlng}&result_type=street_address|locality&key=${process.env.GOOGLE_API_KEY}`,
   );
   const json = await result.json();
   const street_address =

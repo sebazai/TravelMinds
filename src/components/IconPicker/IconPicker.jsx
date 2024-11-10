@@ -35,13 +35,13 @@ import {
   CreditCard,
   AttachMoney,
   Image,
-  MusicNote,    
+  MusicNote,
   Language,
   LocationOn,
   CalendarToday,
   AccessTime,
   Lock,
-  Help
+  Help,
 } from '@mui/icons-material';
 
 const selectedIcons = {
@@ -82,14 +82,14 @@ const selectedIcons = {
   CalendarToday,
   AccessTime,
   Lock,
-  Help
+  Help,
 };
 
 export const IconPicker = ({ onChange, currentIcon }) => {
-  const iconOptions = Object.keys(selectedIcons).map(iconName => ({
+  const iconOptions = Object.keys(selectedIcons).map((iconName) => ({
     label: iconName,
     value: iconName,
-    icon: selectedIcons[iconName]
+    icon: selectedIcons[iconName],
   }));
 
   return (
@@ -99,28 +99,27 @@ export const IconPicker = ({ onChange, currentIcon }) => {
       options={iconOptions}
       isOptionEqualToValue={(option, value) => option.value === value.value}
       autoHighlight
-      value={iconOptions.find(option => option.value === currentIcon) || null}
+      value={iconOptions.find((option) => option.value === currentIcon) || null}
       getOptionLabel={(option) => option.label}
       renderOption={(props, option) => {
         const IconComponent = option.icon;
-        const { key, ...otherProps } = props; 
+        const { key, ...otherProps } = props;
         return (
           <Box
             component="li"
-            sx={{ 
+            sx={{
               '& > svg': { mr: 2, flexShrink: 0 },
               display: 'flex',
-              alignItems: 'center'
+              alignItems: 'center',
             }}
-            key={key} 
-            {...otherProps} 
+            key={key}
+            {...otherProps}
           >
             <IconComponent />
             {option.label}
           </Box>
         );
       }}
-            
       renderInput={(params) => {
         const SelectedIcon = currentIcon ? selectedIcons[currentIcon] : null;
         return (
@@ -139,7 +138,7 @@ export const IconPicker = ({ onChange, currentIcon }) => {
                   )}
                   {params.InputProps.startAdornment}
                 </>
-              )
+              ),
             }}
           />
         );
@@ -149,8 +148,8 @@ export const IconPicker = ({ onChange, currentIcon }) => {
       }}
       ListboxProps={{
         style: {
-          maxHeight: '300px'
-        }
+          maxHeight: '300px',
+        },
       }}
     />
   );

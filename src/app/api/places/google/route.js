@@ -8,7 +8,7 @@ export async function POST(req) {
   const longitude = data.location[1];
   const encodedTextInput = encodeURIComponent(textinput);
   const encodedLocationBios = encodeURIComponent(
-    `circle:2000@${latitude},${longitude}`
+    `circle:2000@${latitude},${longitude}`,
   );
 
   // https://developers.google.com/maps/documentation/places/web-service/search-find-place

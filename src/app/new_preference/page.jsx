@@ -37,7 +37,7 @@ export default function FormPage() {
     const fetchFirstUser = async () => {
       const response = await fetch('/api/users');
       const data = await response.json();
-      return data._id || 'USER_ID'; 
+      return data._id || 'USER_ID';
     };
 
     fetchFirstUser().then((userId) => {
@@ -48,8 +48,8 @@ export default function FormPage() {
           title: formData.title,
           description: formData.description,
           icon: formData.icon,
-          createdBy: userId
-        })
+          createdBy: userId,
+        }),
       });
     });
 
@@ -58,7 +58,6 @@ export default function FormPage() {
       description: '',
       icon: 'home',
     });
-
   };
 
   const handleChange = (e) => {

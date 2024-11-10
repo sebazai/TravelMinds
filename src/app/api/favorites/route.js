@@ -6,7 +6,10 @@ import { NextResponse } from 'next/server';
 export async function GET() {
   try {
     await connectToDataBase();
-    const favorites = await Favorite.find().populate('createdBy');
+    const favorites = await Favorite.find().populate({
+      path: 'createdBy',
+      model: User,
+    });
     return NextResponse.json(favorites);
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

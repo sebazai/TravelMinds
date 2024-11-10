@@ -31,9 +31,19 @@ async function seedDatabase() {
         city: 'New York',
       },
       preferences: [],
+      favorites: [],
     });
     await newUser.save();
     console.log('Sample user created:', newUser);
+
+    const favoritesData = {
+      title: 'Central Park',
+      location: 'New York',
+      rating: 5,
+      description: 'Central Park is an urban park in New York City.',
+      photo: 'https://source.unsplash.com/featured/?centralpark',
+      createdBy: newUser._id,
+    };
 
     // Create preferences with the user’s _id as `createdBy`
     const preferencesData = [
@@ -59,7 +69,9 @@ async function seedDatabase() {
 
     // Save the preferences and link them to the user
     const savedPreferences = await Preference.insertMany(preferencesData);
+    const savedFavorite = await Favorite.create(favoritesData);
     newUser.preferences = savedPreferences.map((preference) => preference._id); // Add preference IDs to user
+    newUser.favorites = [savedFavorite._id];
     await newUser.save(); // Update the user with linked preferences
 
     console.log('Preferences created and linked to user:', savedPreferences);

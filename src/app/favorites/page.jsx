@@ -5,9 +5,6 @@ import React, { useEffect, useState } from 'react';
 import FavoritesBanner from '@/components/favorites/Favoritebanner';
 
 export default function Page() {
-  //have to be change to get the current id
-  const userId = '671e08152b900f9b6025e9c2';
-
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,7 +12,7 @@ export default function Page() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await fetch(`/api/users/${userId}`);
+        const response = await fetch('/api/users');
         if (!response.ok) {
           throw new Error('Failed to fetch user data');
         }
@@ -29,7 +26,7 @@ export default function Page() {
     };
 
     fetchUserData();
-  }, [userId]);
+  }, []);
 
   if (loading) {
     return (

@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css';
 import 'leaflet-defaulticon-compatibility';
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef } from 'react';
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import { SelectionOverlay } from '@/components/Map/SelectionOverlay';
 import L from 'leaflet';
@@ -16,10 +16,16 @@ const Map = (props) => {
   const { position, placesData, fetchPlaces } = props;
   const icon = L.icon({ iconUrl: '/images/marker-icon.png' });
   const mapRef = useRef();
-  const {data: userData} = useGetUserQuery();
+  const { data: userData, isLoading: isLoadingUserData } = useGetUserQuery();
+
+  console.log('userData', userData);
 
   if (!position) {
     return <div>Unable to retrieve your location</div>; // Handle error state
+  }
+
+  if (isLoadingUserData) {
+    return <div>Loading...</div>; // Handle loading state
   }
   console.log('PlacesData', placesData);
 

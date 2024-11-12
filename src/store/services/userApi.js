@@ -5,7 +5,7 @@ export const userApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   endpoints: (builder) => ({
     getUser: builder.query({
-      query: (id) => id ? `/users/${id}` : 'users/',
+      query: (id) => (id ? `/users/${id}` : 'users/'),
     }),
   }),
 });

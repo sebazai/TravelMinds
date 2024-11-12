@@ -15,7 +15,7 @@ const SavedSearchList = ({ savedSearches }) => {
   return (
     <>
       <br />
-      <h2>My favorites researchs :</h2>
+      <h2>Saved searches</h2>
       <br />
       <Container>
         {savedSearches.map((search, index) => (

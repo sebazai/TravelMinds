@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 
 import { IconPicker } from '@/components/IconPicker/IconPicker';
+import { useGetUserQuery } from '@/store/services/userApi.js';
 
 export default function FormPage() {
   const searchParams = useSearchParams();
@@ -20,7 +21,7 @@ export default function FormPage() {
     description: '',
     icon: 'home',
   });
-
+  const {data: userData, refetch} = useGetUserQuery();
   useEffect(() => {
     const description = searchParams.get('description');
     if (description) {
@@ -33,25 +34,17 @@ export default function FormPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    fetch('/api/preferences', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: formData.title,
+        description: formData.description,
+        icon: formData.icon,
+        createdBy: userData._id,
+      }),
+    }).then(()=>refetch());
 
-    const fetchFirstUser = async () => {
-      const response = await fetch('/api/users');
-      const data = await response.json();
-      return data._id || 'USER_ID';
-    };
-
-    fetchFirstUser().then((userId) => {
-      fetch('/api/preferences', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: formData.title,
-          description: formData.description,
-          icon: formData.icon,
-          createdBy: userId,
-        }),
-      });
-    });
 
     setFormData({
       title: '',
@@ -75,7 +68,7 @@ export default function FormPage() {
     }));
   };
 
-  return (
+  return (userData && (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
@@ -124,5 +117,6 @@ export default function FormPage() {
         </form>
       </Paper>
     </Container>
+  )
   );
 }

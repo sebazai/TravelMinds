@@ -1,31 +1,20 @@
 'use client';
-import userData from './settingsInfo.json';
 import UserCardWrapper from '@/components/User/UserCardWrapper';
 import SavedSearchList from '@/components/User/SavedSearchList';
 import AddNewPreferenceButton from '@/components/User/PreferenceButton';
 import { Box } from '@mui/material';
-import { useState, useEffect } from 'react';
+import { useGetUserQuery } from '@/store/services/userApi.js';
 
 export default function Page() {
-  const [userData, setUserData] = useState(null);
-
-  useEffect(() => {
-    fetch('/api/users')
-      .then((response) => response.json())
-      .then((data) => setUserData(data));
-  }, []);
-
+  const { data: userData } = useGetUserQuery();
   if (!userData) {
     return <div>Loading...</div>;
-  } else {
-    console.log(userData.preferences);
   }
-
   return (
     <Box
       sx={{
         bgcolor: 'background.main',
-        padding: 1,
+        padding: 1
       }}
     >
       <UserCardWrapper user={userData} />

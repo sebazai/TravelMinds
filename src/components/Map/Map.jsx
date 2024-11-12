@@ -10,20 +10,13 @@ import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import { SelectionOverlay } from '@/components/Map/SelectionOverlay';
 import L from 'leaflet';
 import { ItemMarker } from './ItemMarker';
+import { useGetUserQuery } from '@/store/services/userApi.js';
 
 const Map = (props) => {
   const { position, placesData, fetchPlaces } = props;
   const icon = L.icon({ iconUrl: '/images/marker-icon.png' });
-  const [preferences, setPreferences] = useState([]);
   const mapRef = useRef();
-
-  useEffect(() => {
-    fetch('/api/users')
-      .then((response) => response.json())
-      .then((data) => {
-        setPreferences(data.preferences);
-      });
-  }, []);
+  const {data: userData} = useGetUserQuery();
 
   if (!position) {
     return <div>Unable to retrieve your location</div>; // Handle error state
@@ -33,7 +26,7 @@ const Map = (props) => {
   return (
     <div style={{ height: '100%', minHeight: '50%' }}>
       <SelectionOverlay
-        chips={preferences}
+        chips={userData.preferences}
         onFetchPlaces={fetchPlaces}
       ></SelectionOverlay>
       <MapContainer

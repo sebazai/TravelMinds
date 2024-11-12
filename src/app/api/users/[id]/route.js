@@ -8,7 +8,7 @@ export async function GET(request, { params }) {
   try {
     await connectToDataBase();
     // Fetch user and populate both preferences and favorites
-    const user = await User.findById(params.id)
+    const user = await User.findOne()
       .populate({ path: 'preferences', model: Preference })
       .populate({ path: 'favorites', model: Favorite });
 

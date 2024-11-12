@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { useLocation } from '@/hooks/useLocation';
+import { usePlacesMutation } from '@/store/services/placesApi';
 
 const Map = dynamic(() => import('@/components/Map/Map'), {
   loading: () => <p>The great map of Earth is loading...</p>,
@@ -11,40 +12,16 @@ const Map = dynamic(() => import('@/components/Map/Map'), {
 
 export default function Page() {
   const [input, setInput] = useState('');
-  const [places, setPlaces] = useState([]); // State to store places
-  const { location, position, isLoading, error } = useLocation();
+  const {
+    location,
+    position,
+    isLoading: isLoadingLocation,
+    error: isLocationError,
+  } = useLocation();
 
-  const fetchPlaces = async (input) => {
-    const response = await fetch('/api/places', {
-      method: 'POST',
-      body: JSON.stringify({
-        prompt: input,
-        data: { location: location },
-      }),
-    });
+  const [places, { isLoading, isSuccess, data, error }] = usePlacesMutation();
 
-    const places = await response.json();
-    const enrichPlaces = await Promise.all(
-      places.places.map(async (place) => {
-        const addressToLatLon = await fetch('/api/places/address', {
-          method: 'POST',
-          body: JSON.stringify({ address: place.address }),
-        });
-        const data = await addressToLatLon.json();
-        return {
-          ...place,
-          address: data.address,
-          coordinates: {
-            latitude: data.latitude,
-            longitude: data.longitude,
-          },
-        };
-      }),
-    );
-    setPlaces(enrichPlaces);
-  };
-
-  if (isLoading) {
+  if (isLoadingLocation) {
     return <div>Fetching user position...</div>; // Handle error state
   }
   return (
@@ -55,17 +32,20 @@ export default function Page() {
         onChange={(event) => {
           setInput(event.target.value);
         }}
-        onKeyDown={async (event) => {
+        onKeyDown={(event) => {
           if (event.key === 'Enter') {
-            await fetchPlaces(input);
+            places({ prompt: input, location });
           }
         }}
       />
       {position && (
         <Map
           position={position}
-          placesData={places}
-          fetchPlaces={fetchPlaces}
+          placesData={data}
+          fetchPlaces={(data) => {
+            console.log('calling with', data);
+            places({ ...data, location });
+          }}
         />
       )}
     </div>

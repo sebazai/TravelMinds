@@ -59,6 +59,7 @@ const fetchValidUrl = async (userLocationString, messages, attempt = 0) => {
 };
 
 export async function POST(req) {
+  console.log('CALLING POST /API/PLACES/CHAT');
   const llama = createOllama();
   const request = await req.json();
   const { messages, data } = request;

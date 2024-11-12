@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function POST(req) {
+  console.log('CALLING POST /API/PLACES/GOOGLE');
   const request = await req.json();
   const { textinput, data } = request;
 

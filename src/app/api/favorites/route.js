@@ -4,6 +4,7 @@ import { User } from '@/models/User';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
+  console.log('CALLING GET /API/FAVORITES');
   try {
     await connectToDataBase();
     const favorites = await Favorite.find().populate({
@@ -22,6 +23,7 @@ export async function GET() {
 // });
 
 export async function POST(request) {
+  console.log('CALLING POST /API/FAVORITES');
   try {
     await connectToDataBase();
     const data = await request.json();

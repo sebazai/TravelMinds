@@ -55,11 +55,15 @@ export const ItemMarker = (props) => {
           setRefReady(true);
         }}
       >
-        <button onClick={() => props.onFavoriteClick('hello')}>press me</button>
         <h2>{name}</h2>
         <p>{description}</p>
         <p>{address}</p>
         working hours: <b>{start_timestamp}</b>- <b>{end_timestamp}</b>
+        <div>
+          <button onClick={() => props.onFavoriteClick(props.item)}>
+            Add to favorites
+          </button>
+        </div>
       </Popup>
     </Marker>
   );

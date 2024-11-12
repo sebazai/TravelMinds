@@ -12,6 +12,7 @@ export async function GET(request, { params }) {
       .populate({ path: 'preferences', model: Preference })
       .populate({ path: 'favorites', model: Favorite });
 
+    console.log('User:', user);
     if (!user) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }

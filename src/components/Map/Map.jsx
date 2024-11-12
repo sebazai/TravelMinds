@@ -19,6 +19,7 @@ const Map = (props) => {
   const { data: userData, isLoading: isLoadingUserData } = useGetUserQuery();
 
   console.log('userData', userData);
+  console.log('PlacesData', placesData);
 
   if (!position) {
     return <div>Unable to retrieve your location</div>; // Handle error state
@@ -27,7 +28,10 @@ const Map = (props) => {
   if (isLoadingUserData) {
     return <div>Loading...</div>; // Handle loading state
   }
-  console.log('PlacesData', placesData);
+
+  const saveFavorite = (data) => {
+    console.log('Call the API to save the favorite', data);
+  };
 
   return (
     <div style={{ height: '100%', minHeight: '50%' }}>
@@ -51,6 +55,7 @@ const Map = (props) => {
               <ItemMarker
                 onFavoriteClick={(data) => {
                   console.log(data);
+                  saveFavorite(data);
                   // Pass function that calls the favorite save API.
                 }}
                 item={item}

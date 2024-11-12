@@ -67,7 +67,7 @@ const Map = (props) => {
   }
 
   return (
-    <div style={{ height: '100%' }}>
+    <div style={{ height: '100%', minHeight: '50%' }}>
       <SelectionOverlay
         location={position}
         chips={preferences}

@@ -72,23 +72,47 @@ export default function Page() {
             const { messages: newMessages, ...rest } = await response.json();
 
             console.log(rest);
-            setPlaces(
-              rest.googleData.candidates.map((place) => {
-                return {
-                  name: place.name,
-                  address: place.formatted_address,
-                  justification: '',
-                  coordinates: {
-                    latitude: place.geometry.location.lat,
-                    longitude: place.geometry.location.lng,
-                  },
-                };
-              }),
-            );
+            if (rest?.googleData?.candidates) {
+              setPlaces(
+                rest.googleData.candidates.map((place) => {
+                  return {
+                    name: place.name,
+                    address: place.formatted_address,
+                    justification: '',
+                    coordinates: {
+                      latitude: place.geometry.location.lat,
+                      longitude: place.geometry.location.lng,
+                    },
+                  };
+                }),
+              );
+            }
 
+            console.log(newMessages);
+            console.log('rest', rest);
+
+            const answer =
+              rest?.googleData?.status !== 'ZERO_RESULTS'
+                ? [
+                    {
+                      role: 'assistant',
+                      content: [{ type: 'text', text: 'Here you go.' }],
+                    },
+                  ]
+                : [
+                    {
+                      role: 'assistant',
+                      content: [
+                        {
+                          type: 'text',
+                          text: 'Please provide more information, I found zero results.',
+                        },
+                      ],
+                    },
+                  ];
             setMessages((currentMessages) => [
               ...currentMessages,
-              ...newMessages,
+              ...(rest?.googleData?.candidates ? answer : newMessages),
             ]);
           }
         }}
@@ -96,7 +120,7 @@ export default function Page() {
 
       {messages.map((message, index) => (
         <div key={`${message.role}-${index}`}>
-          {message.role === 'user' ? 'User: ' : 'AI: '}
+          {message.role === 'user' ? 'User: ' : 'TravelBuddy: '}
           {typeof message.content === 'string'
             ? message.content
             : message.content

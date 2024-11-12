@@ -11,7 +11,6 @@ const Map = dynamic(() => import('@/components/Map/Map'), {
 });
 
 export default function Page() {
-  const [input, setInput] = useState('');
   const {
     location,
     position,
@@ -26,18 +25,7 @@ export default function Page() {
   }
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <p>Location: {location}</p>
-      <input
-        value={input}
-        onChange={(event) => {
-          setInput(event.target.value);
-        }}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter') {
-            places({ prompt: input, location });
-          }
-        }}
-      />
+     
       {position && (
         <Map
           position={position}

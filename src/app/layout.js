@@ -37,7 +37,7 @@ export const colorTheme = createTheme({
       main: '#272623',
     },
     lightGrey: {
-      main: '#393937',
+      main: '#272623',
     },
     orange: {
       main: '#A3512B',

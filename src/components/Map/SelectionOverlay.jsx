@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
   container: {
     position: 'fixed',
-    bottom: '55px', // Position 60px above the bottom
+    bottom: '60px', // Position 60px above the bottom
     left: 0,
     right: 0,
     zIndex: 450,

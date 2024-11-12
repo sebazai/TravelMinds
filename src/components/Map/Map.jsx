@@ -32,7 +32,7 @@ const Map = (props) => {
 
   return (
     <div style={{ height: '100%', minHeight: '50%' }}>
-      <SearchBar />
+      <SearchBar onFetchPlaces={fetchPlaces} />
 
       <SelectionOverlay
         chips={userData.preferences}
@@ -43,7 +43,7 @@ const Map = (props) => {
         style={{ height: '100%' }}
         center={position}
         zoom={13}
-        zoomControl={false} // Disable default zoom control
+        zoomControl={false}
 
       >
         <TileLayer

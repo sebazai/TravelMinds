@@ -1,33 +1,35 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/router";
-import { Box, Chip, IconButton, InputBase } from "@mui/material";
+import { Box, IconButton, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
+import { useRouter } from 'next/navigation';
 
 export const SearchBar = (props) => {
-  const { chat, location } = props;
-  // const router = useRouter();
+  const { onFetchPlaces } = props;
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
   const handleSearch = () => {
     if (searchTerm.trim()) {
-      // chat({ messages: [{ role: "user", content: searchTerm }], location });
+      onFetchPlaces({
+        prompt: searchTerm,
+      });
       setIsSearching(true);
     }
   };
 
   const handleAddPage = () => {
-    // router.push(`/search?q=${searchTerm}`);
+    router.push(`/new_preference?description=${searchTerm}`);
   };
 
   return (
     <Box
       sx={{
         position: 'fixed',
-        top: '55px', 
+        top: '12px', 
         left: 0,
         right: 0,
         zIndex: 450,
@@ -38,7 +40,7 @@ export const SearchBar = (props) => {
       }}
     >
       <InputBase
-        placeholder="Rechercher..."
+        placeholder="Search..."
         value={searchTerm}
         onChange={(e) => {
           setSearchTerm(e.target.value);
@@ -54,11 +56,11 @@ export const SearchBar = (props) => {
           padding: "8px 16px",
           border: "1px solid #ccc",
           borderRadius: "20px",
-          color: "#000",
+          color: "text.primary",
           "&::placeholder": {
             color: "#888",
           },
-          backgroundColor: "#fff",
+          backgroundColor: 'lightGrey.main',
           transition: "all 0.2s",
         }}
         startAdornment={
@@ -67,19 +69,24 @@ export const SearchBar = (props) => {
             onClick={handleSearch}
             sx={{ marginRight: "8px" }}
           >
-            <SearchIcon sx={{ color: "#000" }} />
+            <SearchIcon sx={{ color: "text.secondary" }} />
           </IconButton>
         }
       />
       {isSearching && (
         <IconButton onClick={handleAddPage}
-        sx={{ color: "#000",
-          backgroundColor: "#fff",
+        sx={{ color: "text.secondary",
+          backgroundColor: "lightGrey.main",
           border: "1px solid #ccc",
           borderRadius: "20px",
           marginLeft: "8px",
         transition: "all 0.2s",
-         }} >
+        //ADD HOVER EFFECT
+        "&:hover": {
+          backgroundColor: "text.secondary",
+          color: "text.primary",
+         },
+        }}>
           <AddIcon />
         </IconButton>
       )}

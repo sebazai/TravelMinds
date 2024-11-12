@@ -40,10 +40,12 @@ const useStyles = makeStyles({
 });
 
 export const SelectionOverlay = (props) => {
-  const { chips, location, chat } = props;
+  const { chips, onFetchPlaces } = props;
   const classes = useStyles();
   const onClick = (chip) => {
-    chat({ messages: [{ role: 'user', content: chip.description }], location });
+    onFetchPlaces({
+      prompt: chip.description,
+    });
   };
   const chipsComponents = chips.map((chip, index) => {
     const IconComponent = MuiIcons[chip.icon];

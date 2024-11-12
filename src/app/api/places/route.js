@@ -6,7 +6,7 @@ import { AIModel } from '@/app/constants';
 export async function POST(req) {
   const llama = createOllama();
   const request = await req.json();
-  console.log('/api/places', request);
+  console.log('CALLING POST /api/places');
   const { prompt, data } = request;
 
   const systemPrompt = `You are a helpful tour guide.
@@ -39,5 +39,21 @@ export async function POST(req) {
 
   const json = text.split('```')[1];
   const resp = JSON.parse(json.startsWith('json') ? json.slice(4) : json);
-  return NextResponse.json(resp);
+
+  const enrichPlaces = await Promise.all(
+    resp.places.map(async (place) => {
+      const googleGeoLocation = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(place.address)}&key=${process.env.GOOGLE_API_KEY}`;
+      const response = await fetch(googleGeoLocation);
+      const json = await response.json();
+
+      return {
+        ...place,
+        coordinates: {
+          latitude: json.results[0].geometry.location.lat,
+          longitude: json.results[0].geometry.location.lng,
+        },
+      };
+    }),
+  );
+  return NextResponse.json({ places: enrichPlaces });
 }

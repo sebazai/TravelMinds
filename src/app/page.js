@@ -1,9 +1,13 @@
 /* eslint-disable indent */
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from '@/hooks/useLocation';
 import dynamic from 'next/dynamic';
+import {
+  usePlacesChatMutation,
+  usePlacesMutation,
+} from '@/store/services/placesApi';
 
 const Map = dynamic(() => import('@/components/Map/Map'), {
   loading: () => <p>The great map of Earth is loading...</p>,
@@ -13,38 +17,19 @@ const Map = dynamic(() => import('@/components/Map/Map'), {
 export default function Page() {
   const { location, position, isLoading, error } = useLocation();
   const [input, setInput] = useState('');
-  const [places, setPlaces] = useState([]); // State to store places
   const [messages, setMessages] = useState([]);
 
-  const fetchPlaces = async (input) => {
-    const response = await fetch('/api/places', {
-      method: 'POST',
-      body: JSON.stringify({
-        prompt: input,
-        data: { location: location },
-      }),
-    });
+  const [placesChat, { data: placesChatData, reset }] = usePlacesChatMutation();
+  const [places, { data: placesData }] = usePlacesMutation();
 
-    const places = await response.json();
-    const enrichPlaces = await Promise.all(
-      places.places.map(async (place) => {
-        const addressToLatLon = await fetch('/api/places/address', {
-          method: 'POST',
-          body: JSON.stringify({ address: place.address }),
-        });
-        const data = await addressToLatLon.json();
-        return {
-          ...place,
-          address: data.address,
-          coordinates: {
-            latitude: data.latitude,
-            longitude: data.longitude,
-          },
-        };
-      }),
-    );
-    setPlaces(enrichPlaces);
-  };
+  useEffect(() => {
+    if (placesChatData) {
+      setMessages((currentMessages) => [
+        ...currentMessages,
+        ...placesChatData.messages,
+      ]);
+    }
+  }, [placesChatData]);
 
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -61,59 +46,11 @@ export default function Page() {
               { role: 'user', content: input },
             ]);
 
-            const response = await fetch('/api/places/chat', {
-              method: 'POST',
-              body: JSON.stringify({
-                messages: [...messages, { role: 'user', content: input }],
-                data: { position, location },
-              }),
+            placesChat({
+              messages: [...messages, { role: 'user', content: input }],
+              location,
+              position,
             });
-
-            const { messages: newMessages, ...rest } = await response.json();
-
-            console.log(rest);
-            if (rest?.googleData?.candidates) {
-              setPlaces(
-                rest.googleData.candidates.map((place) => {
-                  return {
-                    name: place.name,
-                    address: place.formatted_address,
-                    justification: '',
-                    coordinates: {
-                      latitude: place.geometry.location.lat,
-                      longitude: place.geometry.location.lng,
-                    },
-                  };
-                }),
-              );
-            }
-
-            console.log(newMessages);
-            console.log('rest', rest);
-
-            const answer =
-              rest?.googleData?.status !== 'ZERO_RESULTS'
-                ? [
-                    {
-                      role: 'assistant',
-                      content: [{ type: 'text', text: 'Here you go.' }],
-                    },
-                  ]
-                : [
-                    {
-                      role: 'assistant',
-                      content: [
-                        {
-                          type: 'text',
-                          text: 'Please provide more information, I found zero results.',
-                        },
-                      ],
-                    },
-                  ];
-            setMessages((currentMessages) => [
-              ...currentMessages,
-              ...(rest?.googleData?.candidates ? answer : newMessages),
-            ]);
           }
         }}
       />
@@ -134,8 +71,12 @@ export default function Page() {
       {position && (
         <Map
           position={position}
-          placesData={places}
-          fetchPlaces={fetchPlaces}
+          placesData={placesChatData ?? placesData}
+          fetchPlaces={(data) => {
+            reset();
+            console.log('calling selectionoverlay with', data);
+            places({ ...data, location });
+          }}
         />
       )}
     </div>

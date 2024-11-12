@@ -55,6 +55,7 @@ export const ItemMarker = (props) => {
           setRefReady(true);
         }}
       >
+        <button onClick={() => props.onFavoriteClick('hello')}>press me</button>
         <h2>{name}</h2>
         <p>{description}</p>
         <p>{address}</p>

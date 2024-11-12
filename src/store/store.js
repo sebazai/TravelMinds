@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { chatApi } from './services/chatApi';
+import { placesApi } from './services/placesApi';
 
 export const store = configureStore({
   reducer: {
-    [chatApi.reducerPath]: chatApi.reducer,
+    [placesApi.reducerPath]: placesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(chatApi.middleware),
+    getDefaultMiddleware().concat(placesApi.middleware),
 });

@@ -1,67 +1,84 @@
-"use client";
+/* eslint-disable indent */
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { useLocation } from '@/hooks/useLocation';
+import dynamic from 'next/dynamic';
+import {
+  usePlacesChatMutation,
+  usePlacesMutation,
+} from '@/store/services/placesApi';
+
+const Map = dynamic(() => import('@/components/Map/Map'), {
+  loading: () => <p>The great map of Earth is loading...</p>,
+  ssr: false,
+});
 
 export default function Page() {
-  const [location, setLocation] = useState(null);
-  const [input, setInput] = useState("");
+  const { location, position, isLoading, error } = useLocation();
+  const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
+
+  const [placesChat, { data: placesChatData, reset }] = usePlacesChatMutation();
+  const [places, { data: placesData }] = usePlacesMutation();
+
   useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(({ coords }) => {
-        const { latitude, longitude } = coords;
-        setLocation({ latitude, longitude });
-      });
+    if (placesChatData) {
+      setMessages((currentMessages) => [
+        ...currentMessages,
+        ...placesChatData.messages,
+      ]);
     }
-  }, []);
+  }, [placesChatData]);
 
   return (
-    <div>
-      <p>Location: {JSON.stringify(location)}</p>
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <p>Location: {location}</p>
       <input
         value={input}
         onChange={(event) => {
           setInput(event.target.value);
         }}
         onKeyDown={async (event) => {
-          if (event.key === "Enter") {
+          if (event.key === 'Enter') {
             setMessages((currentMessages) => [
               ...currentMessages,
-              { role: "user", content: input },
+              { role: 'user', content: input },
             ]);
 
-            const response = await fetch("/api/places/chat", {
-              method: "POST",
-              body: JSON.stringify({
-                messages: [...messages, { role: "user", content: input }],
-                data: { location },
-              }),
+            placesChat({
+              messages: [...messages, { role: 'user', content: input }],
+              location,
+              position,
             });
-
-            const { messages: newMessages, ...rest } = await response.json();
-
-            console.log(rest);
-
-            setMessages((currentMessages) => [
-              ...currentMessages,
-              ...newMessages,
-            ]);
           }
         }}
       />
 
       {messages.map((message, index) => (
         <div key={`${message.role}-${index}`}>
-          {message.role === "user" ? "User: " : "AI: "}
-          {typeof message.content === "string"
+          {message.role === 'user' ? 'User: ' : 'TravelBuddy: '}
+          {typeof message.content === 'string'
             ? message.content
             : message.content
-                .filter((part) => part.type === "text")
+                .filter((part) => part.type === 'text')
                 .map((part, partIndex) => (
                   <span key={partIndex}>{part.text}</span>
                 ))}
         </div>
       ))}
+
+      {position && (
+        <Map
+          position={position}
+          placesData={placesChatData ?? placesData}
+          fetchPlaces={(data) => {
+            reset();
+            console.log('calling selectionoverlay with', data);
+            places({ ...data, location });
+          }}
+        />
+      )}
     </div>
   );
 }

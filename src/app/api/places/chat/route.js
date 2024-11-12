@@ -1,6 +1,6 @@
-import { generateText } from "ai";
-import { createOllama } from "ollama-ai-provider";
-import { AIModel } from "@/app/constants";
+import { generateText } from 'ai';
+import { createOllama } from 'ollama-ai-provider';
+import { AIModel } from '@/app/constants';
 
 const generateGoogleFindUrlUsingLLM = async (userLocationString, messages) => {
   const llama = createOllama();
@@ -45,12 +45,12 @@ const askForMoreInformation = async (userLocationString, messages) => {
 
 // Try naively three times to generate the freaking Google url, otherwise return null
 const fetchValidUrl = async (userLocationString, messages, attempt = 0) => {
-  const re = new RegExp("(http|https)://", "i");
+  const re = new RegExp('(http|https)://', 'i');
   if (attempt >= 3) return askForMoreInformation(userLocationString, messages);
 
   const LLMResponse = await generateGoogleFindUrlUsingLLM(
     userLocationString,
-    messages
+    messages,
   );
 
   return re.test(LLMResponse.text)
@@ -59,11 +59,12 @@ const fetchValidUrl = async (userLocationString, messages, attempt = 0) => {
 };
 
 export async function POST(req) {
+  console.log('CALLING POST /API/PLACES/CHAT');
   const llama = createOllama();
   const request = await req.json();
   const { messages, data } = request;
 
-  const userLocationString = `The location of the user is latitude ${data.location.latitude} and longitude ${data.location.longitude}.`;
+  const userLocationString = `The location of the user is ${data.location}. The coordinates are latitude ${data.position.latitude}, longitude ${data.position.longitude}.`;
 
   const { text: validateConversation } = await generateText({
     model: llama(AIModel),
@@ -76,39 +77,42 @@ export async function POST(req) {
     messages,
   });
 
-  console.log("Valid: ", validateConversation);
+  console.log('Valid: ', validateConversation);
 
-  if (validateConversation.startsWith("No")) {
+  if (validateConversation.startsWith('No')) {
     const llmResult = await askForMoreInformation(userLocationString, messages);
     return Response.json({ messages: llmResult.responseMessages });
   }
 
-  const re = new RegExp("(http|https)://", "i");
+  const re = new RegExp('(http|https)://', 'i');
 
   const llmPerhapsValidUrl = await fetchValidUrl(userLocationString, messages);
 
   // Check if the LLM returned a URL
   if (re.test(llmPerhapsValidUrl.text)) {
     const text = llmPerhapsValidUrl.text;
-    const url = text.split("```")[1];
+    const url = text.split('```')[1] ?? text;
+
+    console.log('Text:', text);
+    console.log('Found url:', url);
 
     // Locationbias was very hard to get automatically encoded, therefore we will replace it with the encoded version
     // Regex capture locationbias and encode
     const locationBias = encodeURIComponent(
-      url.match(/locationbias=(.*?)&/)[1]
+      url.match(/locationbias=(.*?)&/)[1],
     );
 
     // Regex replace locationbias with encoded locationbias in URL
     const urlToDoRequestToGoogle = url.replace(
       /locationbias=(.*?)&/,
-      `locationbias=${locationBias}&`
+      `locationbias=${locationBias}&`,
     );
 
-    console.log("new url:", urlToDoRequestToGoogle);
+    console.log('new url:', urlToDoRequestToGoogle);
     const fetchResponse = await fetch(urlToDoRequestToGoogle);
     const fetchResponseData = await fetchResponse.json();
 
-    console.log("Google answer", JSON.stringify(fetchResponseData, null, 2));
+    console.log('Google answer', JSON.stringify(fetchResponseData, null, 2));
 
     return Response.json({
       // Return all messages except the last one???

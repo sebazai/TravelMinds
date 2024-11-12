@@ -21,7 +21,7 @@ export async function GET() {
 //       title: 'Sport',
 //       description: 'Basketball',
 //       icon: '-ball',
-//       createdBy: 'USER_ID' // 
+//       createdBy: 'USER_ID' //
 //     })
 //   });
 
@@ -30,10 +30,9 @@ export async function POST(request) {
     await connectToDataBase();
     const data = await request.json();
     const preference = await Preference.create(data);
-    await User.findByIdAndUpdate(
-      data.createdBy,
-      { $push: { preferences: preference._id } }
-    );
+    await User.findByIdAndUpdate(data.createdBy, {
+      $push: { preferences: preference._id },
+    });
     return NextResponse.json(preference, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

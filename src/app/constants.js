@@ -1,1 +1,1 @@
-export const AIModel = "openhermes";
+export const AIModel = 'openhermes';

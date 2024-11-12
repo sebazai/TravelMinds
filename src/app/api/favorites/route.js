@@ -4,9 +4,13 @@ import { User } from '@/models/User';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
+  console.log('CALLING GET /API/FAVORITES');
   try {
     await connectToDataBase();
-    const favorites = await Favorite.find().populate('createdBy');
+    const favorites = await Favorite.find().populate({
+      path: 'createdBy',
+      model: User,
+    });
     return NextResponse.json(favorites);
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
@@ -19,16 +23,16 @@ export async function GET() {
 // });
 
 export async function POST(request) {
+  console.log('CALLING POST /API/FAVORITES');
   try {
     await connectToDataBase();
     const data = await request.json();
 
     const favorite = await Favorite.create(data);
 
-    await User.findByIdAndUpdate(
-      data.createdBy,
-      { $push: { favorites: favorite._id } } 
-    );
+    await User.findByIdAndUpdate(data.createdBy, {
+      $push: { favorites: favorite._id },
+    });
 
     return NextResponse.json(favorite, { status: 201 });
   } catch (error) {

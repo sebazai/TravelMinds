@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   TextField,
   Button,
@@ -9,20 +9,21 @@ import {
   Paper,
   Typography,
   Box,
-} from "@mui/material";
+} from '@mui/material';
 
-import { IconPicker } from "@/components/IconPicker/IconPicker";
+import { IconPicker } from '@/components/IconPicker/IconPicker';
+import { useGetUserQuery } from '@/store/services/userApi.js';
 
 export default function FormPage() {
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    icon: "home",
+    title: '',
+    description: '',
+    icon: 'home',
   });
-
+  const {data: userData, refetch} = useGetUserQuery();
   useEffect(() => {
-    const description = searchParams.get("description");
+    const description = searchParams.get('description');
     if (description) {
       setFormData((prev) => ({
         ...prev,
@@ -33,32 +34,23 @@ export default function FormPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const fetchFirstUser = async () => {
-      const response = await fetch('/api/users');
-      const data = await response.json();
-      return data[0]?._id || 'USER_ID'; 
-    };
-
-    fetchFirstUser().then((userId) => {
-      fetch('/api/preferences', {
+    fetch('/api/preferences', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         title: formData.title,
         description: formData.description,
         icon: formData.icon,
-        createdBy: userId
-      })
-      });
-    });
+        createdBy: userData._id,
+      }),
+    }).then(()=>refetch());
+
 
     setFormData({
-      title: "",
-      description: "",
-      icon: "home",
+      title: '',
+      description: '',
+      icon: 'home',
     });
-
   };
 
   const handleChange = (e) => {
@@ -76,7 +68,7 @@ export default function FormPage() {
     }));
   };
 
-  return (
+  return (userData && (
     <Container maxWidth="sm" sx={{ mt: 4 }}>
       <Paper elevation={3} sx={{ p: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
@@ -125,5 +117,6 @@ export default function FormPage() {
         </form>
       </Paper>
     </Container>
+  )
   );
 }

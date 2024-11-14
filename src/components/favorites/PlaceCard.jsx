@@ -15,10 +15,11 @@ const PlaceCard = ({ title, description, image, rate }) => {
     <Card
       sx={{
         display: 'flex',
-        marginBottom: 2,
+        marginBottom: 1.5,
         width: '100%',
-        maxWidth: 600,
+        maxWidth: 580,
         position: 'relative',
+        marginX: 'auto', 
       }}
     >
       <IconButton
@@ -36,26 +37,31 @@ const PlaceCard = ({ title, description, image, rate }) => {
 
       <CardMedia
         component="img"
-        sx={{ width: '23%' }}
+        sx={{ width: '35%' }} 
         image={image}
         alt={title}
       />
 
       <CardContent
         sx={{
-          width: '88%',
+          width: '70%',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
+          paddingX: 1.5, 
         }}
       >
         <Grid container alignItems="center" justifyContent="space-between">
-          <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+          <Typography
+            variant="subtitle1" 
+            component="div"
+            sx={{ fontWeight: 'bold' }}
+          >
             {title}
           </Typography>
         </Grid>
 
-        <Grid container sx={{ marginY: 1 }}>
+        <Grid container sx={{ marginY: 0.5 }}>
           <Rating
             name="place-rating"
             value={Number(rate)}

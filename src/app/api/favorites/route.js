@@ -18,9 +18,7 @@ export async function GET() {
 }
 
 // Example usage for fetching favorites:
-// fetch('/api/favorites', {
-//     method: 'GET'
-// });
+// fetch('/api/favorites', { method: 'GET' });
 
 export async function POST(request) {
   console.log('CALLING POST /API/FAVORITES');
@@ -47,6 +45,7 @@ export async function POST(request) {
 //     body: JSON.stringify({
 //       title: 'Beautiful Beach',
 //       location: 'Hawaii',
+//       coordinates: { latitude: 20.7967, longitude: -156.3319 },
 //       rating: 5,
 //       description: 'A stunning beach with crystal clear waters.',
 //       photo: 'http://example.com/photo.jpg',

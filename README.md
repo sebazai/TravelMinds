@@ -16,13 +16,9 @@ Add the connection string to `.env.local`, replace <ask for connection string> w
 
 ```
 MONGODB_URI="<ask for connection string>"
+GOOGLE_API_URL="<ask>"
+GROQ_API_URL="<ask>"
 ```
-
-### Install Ollama
-
-[Ollama](https://ollama.com/)
-
-Run `ollama pull openhermes`
 
 ### Optional
 

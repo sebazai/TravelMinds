@@ -10,7 +10,7 @@ export const ItemMarker = (props) => {
       coordinates,
       opens_at = '00:00',
       closes_at = '00:00',
-      description = props.item.justification || '',
+      description = '',
     },
     icon,
   } = props;

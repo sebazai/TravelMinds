@@ -71,6 +71,7 @@ export async function POST(req) {
 
       return {
         ...place,
+        description: place.justification,
         coordinates: {
           latitude: json.results[0].geometry.location.lat,
           longitude: json.results[0].geometry.location.lng,

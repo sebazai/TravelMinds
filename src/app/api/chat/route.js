@@ -1,15 +1,18 @@
 import { streamText } from 'ai';
-import { NextResponse } from 'next/server';
-import { createOllama } from 'ollama-ai-provider';
 import { AIModel } from '@/app/constants';
+import { createOpenAI } from '@ai-sdk/openai';
 
 export async function POST(req) {
-  const llama = createOllama();
+  const groq = createOpenAI({
+    baseURL: 'https://api.groq.com/openai/v1',
+    apiKey: process.env.GROQ_API_KEY,
+  });
+
   const request = await req.json();
   const { messages } = request;
 
   const result = await streamText({
-    model: llama(AIModel),
+    model: groq(AIModel),
     messages,
   });
 

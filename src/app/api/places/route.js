@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 // import { createOllama } from 'ollama-ai-provider';
 // import { AIModel } from '@/app/constants';
 import Groq from 'groq-sdk';
+import { AIModel } from '@/app/constants';
 
 export async function POST(req) {
   const client = new Groq({
@@ -38,7 +39,7 @@ export async function POST(req) {
       { role: 'user', content: prompt },
     ],
     temperature: 0.25,
-    model: 'llama-3.2-11b-vision-preview',
+    model: AIModel,
     stream: false,
     response_format: { type: 'json_object' },
   });

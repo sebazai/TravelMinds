@@ -6,11 +6,12 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet-defaulticon-compatibility';
 
 import { useRef } from 'react';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, ZoomControl } from 'react-leaflet';
 import { SelectionOverlay } from '@/components/Map/SelectionOverlay';
 import L from 'leaflet';
 import { ItemMarker } from './ItemMarker';
 import { useGetUserQuery } from '@/store/services/userApi.js';
+import { SearchBar } from "./SearchBar";
 
 const Map = (props) => {
   const { position, placesData, fetchPlaces } = props;
@@ -35,6 +36,8 @@ const Map = (props) => {
 
   return (
     <div style={{ height: '100%', minHeight: '50%' }}>
+      <SearchBar onFetchPlaces={fetchPlaces} />
+
       <SelectionOverlay
         chips={userData.preferences}
         onFetchPlaces={fetchPlaces}
@@ -44,6 +47,8 @@ const Map = (props) => {
         style={{ height: '100%' }}
         center={position}
         zoom={13}
+        zoomControl={false}
+
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

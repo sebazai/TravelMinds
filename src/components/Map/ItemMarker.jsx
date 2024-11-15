@@ -8,9 +8,9 @@ export const ItemMarker = (props) => {
       name = '',
       address,
       coordinates,
-      start_timestamp = '00:00',
-      end_timestamp = '00:00',
-      description = '',
+      opens_at = '00:00',
+      closes_at = '00:00',
+      description = props.item.justification || '',
     },
     icon,
   } = props;
@@ -58,7 +58,7 @@ export const ItemMarker = (props) => {
         <h2>{name}</h2>
         <p>{description}</p>
         <p>{address}</p>
-        working hours: <b>{start_timestamp}</b>- <b>{end_timestamp}</b>
+        Working hours: <b>{opens_at}</b>- <b>{closes_at}</b>
         <div>
           <button onClick={() => props.onFavoriteClick(props.item)}>
             Add to favorites

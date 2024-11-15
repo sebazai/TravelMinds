@@ -21,6 +21,7 @@
     "crypto": "^1.0.1",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
+    "groq-sdk": "^0.8.0",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "mongodb": "^6.9.0",

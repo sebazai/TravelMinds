@@ -1,7 +1,7 @@
 'use client';
 
-import dynamic from "next/dynamic";
-import { useState } from "react";
+import dynamic from 'next/dynamic';
+import { SearchBar } from '@/components/Map/SearchBar';
 import { useLocation } from '@/hooks/useLocation';
 import { usePlacesMutation } from '@/store/services/placesApi';
 
@@ -25,7 +25,6 @@ export default function Page() {
   }
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-     
       {position && (
         <Map
           position={position}
@@ -34,7 +33,9 @@ export default function Page() {
             console.log('calling with', data);
             places({ ...data, location });
           }}
-        />
+        >
+          <SearchBar onFetchPlaces={(data) => places({ ...data, location })} />
+        </Map>
       )}
     </div>
   );

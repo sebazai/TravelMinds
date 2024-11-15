@@ -28,10 +28,10 @@ export const placesApi = createApi({
       }),
       transformResponse: (response) => {
         console.log('Response:', response);
-        if (!response?.googleData?.candidates) return response;
+        if (!response?.googleData?.results) return response;
 
         console.log('We have some Google candidates');
-        if (response.googleData.candidates) {
+        if (response.googleData.results) {
           const answer =
             response?.googleData?.status !== 'ZERO_RESULTS'
               ? [
@@ -56,7 +56,7 @@ export const placesApi = createApi({
                     ],
                   },
                 ];
-          const placesMappedResult = response.googleData.candidates.map(
+          const placesMappedResult = response.googleData.results.map(
             (place) => {
               return {
                 name: place.name,
@@ -69,7 +69,7 @@ export const placesApi = createApi({
               };
             },
           );
-          // Swap the last response.messages item with answer if we have candidates
+          // Swap the last response.messages item with answer if we have results
           const newMessages = response.messages.slice(0, -1);
           newMessages.push(...answer);
           return { messages: newMessages, places: placesMappedResult };
@@ -77,7 +77,7 @@ export const placesApi = createApi({
 
         //   setMessages((currentMessages) => [
         //     ...currentMessages,
-        //     ...(rest?.googleData?.candidates ? answer : newMessages),
+        //     ...(rest?.googleData?.results ? answer : newMessages),
         //   ]);
         //   return {
         //     messages: [],

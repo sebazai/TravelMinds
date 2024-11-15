@@ -11,10 +11,9 @@ import { SelectionOverlay } from '@/components/Map/SelectionOverlay';
 import L from 'leaflet';
 import { ItemMarker } from './ItemMarker';
 import { useGetUserQuery } from '@/store/services/userApi.js';
-import { SearchBar } from './SearchBar';
 
 const Map = (props) => {
-  const { position, placesData, fetchPlaces } = props;
+  const { position, placesData, fetchPlaces, children } = props;
   const icon = L.icon({ iconUrl: '/images/marker-icon.png' });
   const mapRef = useRef();
   const { data: userData, isLoading: isLoadingUserData } = useGetUserQuery();
@@ -36,7 +35,7 @@ const Map = (props) => {
 
   return (
     <div style={{ height: '100%', minHeight: '50%' }}>
-      <SearchBar onFetchPlaces={fetchPlaces} />
+      {children}
 
       <SelectionOverlay
         chips={userData.preferences}

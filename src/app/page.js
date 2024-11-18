@@ -33,6 +33,7 @@ export default function Page() {
 
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <h1>Experimental TravelBuddy</h1>
       <p>Location: {location}</p>
       <input
         value={input}

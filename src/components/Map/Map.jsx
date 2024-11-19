@@ -16,7 +16,7 @@ const Map = (props) => {
   const { position, placesData, fetchPlaces, children } = props;
   const icon = L.icon({ iconUrl: '/images/marker-icon.png' });
   const mapRef = useRef();
-  const { data: userData, isLoading: isLoadingUserData } = useGetUserQuery();
+  const { data: userData, isLoading: isLoadingUserData, refetch } = useGetUserQuery();
 
   console.log('userData', userData);
   console.log('PlacesData', placesData);
@@ -31,6 +31,21 @@ const Map = (props) => {
 
   const saveFavorite = async (data) => {
     console.log('Call the API to save the favorite', data);
+
+    fetch('/api/favorites', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: data.name,
+        location: data.address,
+        coordinates: data.coordinates,
+        rating: data.rating,
+        description: data.justification,
+        photo: data.photo,
+        createdBy: userData._id,
+      }),
+    }).then(()=>refetch());
+
   };
 
   return (
@@ -54,12 +69,20 @@ const Map = (props) => {
         ></TileLayer>
         {placesData?.places &&
           placesData.places.map((item) => {
+            const computedPhoto =`https://picsum.photos/id/${Math.floor(Math.random() * 100)}/200/200`;
+            const computedRating = (Math.random() * (5.0 - 1.0) + 1.0).toFixed(1);
+            const favoriteItem = {
+              ...item,
+              photo: computedPhoto,
+              rating: computedRating,
+            };
             return (
               <ItemMarker
                 onFavoriteClick={async (data) => {
                   await saveFavorite(data);
                 }}
-                item={item}
+                item={favoriteItem
+                }
                 key={item.address}
                 icon={icon}
               />

@@ -4,11 +4,9 @@ import { NextResponse } from 'next/server';
 // import { AIModel } from '@/app/constants';
 import Groq from 'groq-sdk';
 import { AIModel } from '@/app/constants';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export async function POST(req) {
-  const client = new Groq({
-    apiKey: process.env.GROQ_API_KEY, // This is the default and can be omitted
-  });
 
   const request = await req.json();
   console.log('CALLING POST /api/places');
@@ -32,24 +30,45 @@ export async function POST(req) {
 
   console.log('System:', systemPrompt);
   console.log('User prompt:', prompt);
+  let text;
 
-  const chatCompletion = await client.chat.completions.create({
-    messages: [
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: prompt },
-    ],
-    temperature: 0.25,
-    model: AIModel,
-    stream: false,
-    response_format: { type: 'json_object' },
-  });
+  if (process.env.USE_GOOGLE_AI) {
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: 'gemini-exp-1114' });
+    const result = await model.generateContent({
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      systemInstruction: systemPrompt,
+      generationConfig: { temperature: 0.25 },
+    });
 
-  const text = JSON.parse(chatCompletion.choices[0].message.content);
+    text = JSON.parse(
+      result.response
+        .text()
+        .replace(/```json/g, '')
+        .replace(/```/g, ''),
+    );
+  } else {
+    const client = new Groq({
+      apiKey: process.env.GROQ_API_KEY, // This is the default and can be omitted
+    });
+    const chatCompletion = await client.chat.completions.create({
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: prompt },
+      ],
+      temperature: 0.25,
+      model: AIModel,
+      stream: false,
+      response_format: { type: 'json_object' },
+    });
+
+    text = JSON.parse(chatCompletion.choices[0].message.content);
+  }
 
   console.log(
     'Chat completion:',
     JSON.stringify(
-      JSON.parse(chatCompletion.choices[0].message.content),
+      text,
       undefined,
       2,
     ),

@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 export const useLocation = () => {
   const [position, setPosition] = useState(null); // State to store user's position
   const [location, setLocation] = useState(null);
+  const [country, setCountry] = useState(null);
+  const [locality, setLocality] = useState(null);
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -40,6 +42,8 @@ export const useLocation = () => {
         .then((data) => {
           setIsLoading(false);
           setLocation(data.location);
+          setCountry(data.country);
+          setLocality(data.locality);
         })
         .catch((error) => {
           setIsLoading(false);
@@ -47,5 +51,5 @@ export const useLocation = () => {
         });
     }
   }, [position]);
-  return { location, position, isLoading, error };
+  return { location, country, locality, position, isLoading, error };
 };

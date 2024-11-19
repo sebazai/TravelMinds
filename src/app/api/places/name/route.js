@@ -13,5 +13,15 @@ export async function POST(req) {
   const json = await result.json();
   const street_address =
     json.results?.[0]?.formatted_address ?? json['plus_code'].compound_code;
-  return NextResponse.json({ location: street_address });
+  const country = json.results?.[0]?.address_components?.find((component) =>
+    component.types.includes('country'),
+  )?.long_name;
+  const locality = json.results?.[0]?.address_components?.find((component) =>
+    component.types.includes('locality'),
+  )?.long_name;
+  return NextResponse.json({
+    location: street_address,
+    country: country,
+    locality: locality,
+  });
 }

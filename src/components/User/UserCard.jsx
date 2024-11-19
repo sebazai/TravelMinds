@@ -13,42 +13,44 @@ const UserCard = ({ user }) => {
   return (
     <Card
       sx={{
-        width: '90%',
-        p: 2,
+        width: '96%',  
         display: 'flex',
         boxShadow: 3,
         bgcolor: 'lightGrey.main',
+        padding: 2
       }}
     >
-      <CardContent sx={{ flex: 1 }}>
-        <Typography
-          variant="h5"
-          component="div"
-          sx={{
-            color: 'text.primary',
-            fontWeight: 'bold',
-            fontSize: '1.5rem',
-          }}
-        >
-          Welcome {user.firstName} {user.lastName}
-        </Typography>
-
-        <Grid container spacing={2} mt={2}>
-          <Grid item xs={2}>
+      <CardContent sx={{ flex: 1, display: 'flex', }}> 
+        <Grid container spacing={5}> 
+          
+          <Grid item xs={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Avatar
-              src={user.photo}
+              src='https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg'
               alt={`${user.firstName} ${user.lastName}`}
-              sx={{ width: 50, height: 50, borderRadius: 1 }}
+              sx={{ width: 100, height: 100, borderRadius: 1 }}
             />
           </Grid>
 
-          <Grid item xs={10}>
+          <Grid item xs={9} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <Typography
+              variant="h5"
+              component="div"
+              sx={{
+                color: 'text.primary',
+                fontWeight: 'bold',
+                fontSize: '1.5rem',
+                mb: 1,  
+              }}
+            >
+              Welcome {user.firstName} {user.lastName}
+            </Typography>
+
             <Box display="flex" alignItems="center" mb={1}>
               {user.countryCode && (
                 <Image
                   src={`https://flagcdn.com/w320/${user.countryCode.toLowerCase()}.png`}
                   alt={user.countryOfOrigin}
-                  style={{ marginRight: '8px' }}
+                  sx={{ marginRight: 2 }} 
                   width={20}
                   height={15}
                 />
@@ -60,18 +62,19 @@ const UserCard = ({ user }) => {
                 {user.countryOfOrigin}
               </Typography>
             </Box>
+
             <Typography
               variant="body2"
               color="text.primary"
               sx={{
                 fontWeight: 'bold',
                 fontStyle: 'italic',
-                color: 'text.primary',
               }}
             >
               Actually in {user.currentLocation.city} ...
             </Typography>
           </Grid>
+
         </Grid>
       </CardContent>
     </Card>

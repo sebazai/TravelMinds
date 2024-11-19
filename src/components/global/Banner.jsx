@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography } from '@mui/material';
 
-const FavoritesBanner = () => {
+const Banner = ({ title }) => {
   return (
     <AppBar
       position="fixed"
@@ -16,11 +16,11 @@ const FavoritesBanner = () => {
         sx={{ height: '100%', display: 'flex', justifyContent: 'center' }}
       >
         <Typography variant="h4" component="div" sx={{ color: 'text.primary' }}>
-          MY FAVORITES
+          {title}
         </Typography>
       </Toolbar>
     </AppBar>
   );
 };
 
-export default FavoritesBanner;
+export default Banner;

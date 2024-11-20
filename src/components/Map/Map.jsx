@@ -6,7 +6,7 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet-defaulticon-compatibility';
 
 import { useRef } from 'react';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import { SelectionOverlay } from '@/components/Map/SelectionOverlay';
 import L from 'leaflet';
 import { ItemMarker } from './ItemMarker';
@@ -14,7 +14,16 @@ import { useGetUserQuery } from '@/store/services/userApi.js';
 
 const Map = (props) => {
   const { position, placesData, fetchPlaces, children } = props;
-  const icon = L.icon({ iconUrl: '/images/marker-icon.png' });
+  const icon = L.icon({ iconUrl: '/images/marker-icon.png'
+    , iconSize: [40, 40], iconAnchor: [20, 40], popupAnchor: [20, -25], tooltipAnchor: [0, -60]
+   });
+  const locationIcon = L.icon({
+    iconUrl: '/images/currentLocation-icon.png',
+    shadowUrl: '/images/currentLocation-shadow.png',
+    iconSize: [40, 40],
+    shadowSize: [40, 40],
+    iconAnchor: [20, 20],
+  });
   const mapRef = useRef();
   const { data: userData, isLoading: isLoadingUserData, refetch } = useGetUserQuery();
 
@@ -32,6 +41,7 @@ const Map = (props) => {
   const saveFavorite = async (data) => {
     console.log('Call the API to save the favorite', data);
 
+    
     fetch('/api/favorites', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -58,15 +68,12 @@ const Map = (props) => {
       ></SelectionOverlay>
       <MapContainer
         ref={mapRef}
-        style={{ height: '100%' }}
+        style={{ height: '100%', backgroundColor: 'rgb(30, 30, 40)' }}
         center={position}
         zoom={13}
         zoomControl={false}
       >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        ></TileLayer>
+        <TileLayer url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png" />
         {placesData?.places &&
           placesData.places.map((item) => {
             const computedPhoto =`https://picsum.photos/id/${Math.floor(Math.random() * 100)}/200/200`;
@@ -81,15 +88,13 @@ const Map = (props) => {
                 onFavoriteClick={async (data) => {
                   await saveFavorite(data);
                 }}
-                item={favoriteItem
-                }
+                item={favoriteItem}
                 key={item.address}
                 icon={icon}
               />
             );
           })}
-        <Marker position={position}>
-          <Popup>You are here</Popup>
+        <Marker position={position} icon={locationIcon}>
         </Marker>
       </MapContainer>
     </div>

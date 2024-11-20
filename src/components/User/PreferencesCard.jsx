@@ -1,8 +1,9 @@
 import React from 'react';
 import { Card, CardContent, Typography, CardMedia } from '@mui/material';
-import IconDisplay from '../IconPicker/IconDisplay';
+import { selectedIcons } from '@/components/IconPicker/IconPicker.jsx';
 
 const PreferenceCard = ({ title, description, icon }) => {
+  const IconComponent = selectedIcons[icon];
   return (
     <Card
       sx={{
@@ -30,7 +31,7 @@ const PreferenceCard = ({ title, description, icon }) => {
           },
         }}
       >
-        {IconDisplay({ iconName: icon })}
+        {IconComponent ? <IconComponent  color={'#000'} /> : null}
       </CardMedia>
       <CardContent
         sx={{

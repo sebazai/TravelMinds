@@ -1,7 +1,7 @@
 import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
-import SettingsIcon from '@mui/icons-material/Settings';
+import UserIcon from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 const routes = ['/favorites', '/map', '/settings'];
@@ -20,9 +20,9 @@ export const NavBar = () => {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-        <BottomNavigationAction label="POIs" icon={<LocationOnIcon />} />
-        <BottomNavigationAction label="Settings" icon={<SettingsIcon />} />
+        <BottomNavigationAction  icon={<FavoriteIcon />} />
+        <BottomNavigationAction  icon={<LocationOnIcon />} />
+        <BottomNavigationAction  icon={<UserIcon />} />
       </BottomNavigation>
     </div>
   );

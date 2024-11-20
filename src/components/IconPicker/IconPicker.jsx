@@ -126,7 +126,13 @@ export const IconPicker = ({ onChange, currentIcon }) => {
           <TextField
             {...params}
             variant="outlined"
-            label="Select an Icon"
+            label="Icon"
+            placeholder="Select an Icon"
+            InputLabelProps={{
+              style: {
+                fontSize: '26px',  
+              },
+            }}
             InputProps={{
               ...params.InputProps,
               startAdornment: (
@@ -139,9 +145,12 @@ export const IconPicker = ({ onChange, currentIcon }) => {
                   {params.InputProps.startAdornment}
                 </>
               ),
+              
             }}
+           
           />
         );
+        
       }}
       onChange={(event, newValue) => {
         onChange(newValue ? newValue.value : '');

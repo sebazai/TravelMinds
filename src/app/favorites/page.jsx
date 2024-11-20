@@ -2,7 +2,7 @@
 import PlaceList from '@/components/favorites/PlaceList';
 import { CircularProgress, Box } from '@mui/material';
 import React from 'react';
-import FavoritesBanner from '@/components/favorites/Favoritebanner';
+import Banner from '@/components/global/Banner';
 import { useGetUserQuery } from '@/store/services/userApi.js';
 
 export default function Page() {
@@ -27,10 +27,10 @@ export default function Page() {
   }
   return (
     <div>
-      <FavoritesBanner />
-      <Box sx={{ marginTop: '70px', paddingX: 2 }}>
-        <PlaceList favorites={userData.favorites} />
-      </Box>
+        <Banner title="MY FAVORITES" />     
+        <Box sx={{ marginTop: '70px', paddingX: 2 }}>
+          <PlaceList favorites={userData.favorites} />
+        </Box>
     </div>
   );
 }

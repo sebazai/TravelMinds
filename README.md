@@ -2,6 +2,8 @@
 
 A Computer Science Project for the University of Helsinki CSM11006 course.
 
+[Travelminds Demo Pitch Report](https://drive.google.com/file/d/1wPLiVtaXrhd9lnezB557NWl467TahtIr/view?usp=sharing)
+
 ## Trello board
 
 [The board](https://trello.com/b/H7lGfMBt/holidayapp)
@@ -39,14 +41,13 @@ Url is `localhost:3000`
 
 To seed the database with a sample user and preferences, run the following command:
 
-```bash
-npm run seed
+`npm run seed`
 
 This script will:
 
-    Connect to the MongoDB database specified in your .env.local file.
-    Clear the existing users in the database.
-    Add a sample user with predefined preferences.
+Connect to the MongoDB database specified in your .env.local file.
+Clear the existing users in the database.
+Add a sample user with predefined preferences.
 
 **Notes:**
 

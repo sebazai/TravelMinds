@@ -4,90 +4,54 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import InputAdornment from '@mui/material/InputAdornment';
 import {
-  Home,
-  Settings,
-  Person,
-  Search,
-  Add,
-  Edit,
-  Delete,
-  Close,
-  Menu,
-  ArrowBack,
-  ArrowForward,
-  Mail,
-  Phone,
-  Message,
-  Notifications,
-  Check,
-  Error,
-  Warning,
-  Info,
-  Star,
-  Favorite,
-  Upload,
-  Download,
-  Save,
-  Print,
-  Share,
-  Folder,
-  ShoppingCart,
-  CreditCard,
-  AttachMoney,
-  Image,
-  MusicNote,
-  Language,
-  LocationOn,
-  CalendarToday,
-  AccessTime,
-  Lock,
-  Help,
-} from '@mui/icons-material';
+  FaHotel,          // Hotel - Accommodation
+  FaUmbrellaBeach,  // Beach - Coastal Locations
+  FaMountain,       // Mountain - Hiking/Trekking
+  FaMapMarkedAlt,   // Map Marker - Tourist Spot
+  FaCity,           // City - Urban Locations
+  FaLandmark,       // Landmark - Monuments
+  FaUtensils,       // Utensils - Restaurants
+  FaCoffee,         // Coffee - Cafes
+  FaShoppingBag,    // Shopping Bag - Malls/Shops
+  FaTheaterMasks,   // Theater Masks - Entertainment/Shows
+  FaSpa,            // Spa - Wellness Centers
+  FaTree,           // Tree - Parks/Outdoor
+  FaCamera,         // Camera - Photography Spots
+  FaWater,          // Water - Water Activities
+  FaPalette,        // Palette - Art and Museums
+  FaMusic,          // Music - Concerts and Festivals
+  FaWineGlassAlt,   // Wine Glass - Bars or Wineries
+  FaBook,           // Book - Libraries or Cultural Centers
+  FaGamepad,        // Gamepad - Entertainment or Gaming
+  FaDice,           // Dice - Casinos or Games
+} from 'react-icons/fa';
 
-const selectedIcons = {
-  Home,
-  Settings,
-  Person,
-  Search,
-  Add,
-  Edit,
-  Delete,
-  Close,
-  Menu,
-  ArrowBack,
-  ArrowForward,
-  Mail,
-  Phone,
-  Message,
-  Notifications,
-  Check,
-  Error,
-  Warning,
-  Info,
-  Star,
-  Favorite,
-  Upload,
-  Download,
-  Save,
-  Print,
-  Share,
-  Folder,
-  ShoppingCart,
-  CreditCard,
-  AttachMoney,
-  Image,
-  MusicNote,
-  Language,
-  LocationOn,
-  CalendarToday,
-  AccessTime,
-  Lock,
-  Help,
+export const selectedIcons = {
+  FaHotel,          // Hotel - Accommodation
+  FaUmbrellaBeach,  // Beach - Coastal Locations
+  FaMountain,       // Mountain - Hiking/Trekking
+  FaMapMarkedAlt,   // Map Marker - Tourist Spot
+  FaCity,           // City - Urban Locations
+  FaLandmark,       // Landmark - Monuments
+  FaUtensils,       // Utensils - Restaurants
+  FaCoffee,         // Coffee - Cafes
+  FaShoppingBag,    // Shopping Bag - Malls/Shops
+  FaTheaterMasks,   // Theater Masks - Entertainment/Shows
+  FaSpa,            // Spa - Wellness Centers
+  FaTree,           // Tree - Parks/Outdoor
+  FaCamera,         // Camera - Photography Spots
+  FaWater,          // Water - Water Activities
+  FaPalette,        // Palette - Art and Museums
+  FaMusic,          // Music - Concerts and Festivals
+  FaWineGlassAlt,   // Wine Glass - Bars or Wineries
+  FaBook,           // Book - Libraries or Cultural Centers
+  FaGamepad,        // Gamepad - Entertainment or Gaming
+  FaDice,           // Dice - Casinos or Games
 };
 
 export const IconPicker = ({ onChange, currentIcon }) => {
   const iconOptions = Object.keys(selectedIcons).map((iconName) => ({
-    label: iconName,
+    label: iconName.slice(2),
     value: iconName,
     icon: selectedIcons[iconName],
   }));

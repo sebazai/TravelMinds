@@ -1,11 +1,11 @@
 import { Box, Chip } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import * as MuiIcons from '@mui/icons-material';
+import { selectedIcons } from '@/components/IconPicker/IconPicker.jsx';
 
 const useStyles = makeStyles({
   chip: {
     backgroundColor: '#fff',
-    color: '#000',
+    color: '#333',
     opacity: 1,
     borderRadius: '8px',
     border: '1px solid #ccc',
@@ -14,7 +14,7 @@ const useStyles = makeStyles({
     padding: '0 8px',
     height: '32px',
     fontWeight: 500,
-    fontSize: '0.875rem',
+    fontSize: '1rem',
     '& .MuiChip-icon': {
       marginLeft: '4px',
       color: '#000',
@@ -48,10 +48,10 @@ export const SelectionOverlay = (props) => {
     });
   };
   const chipsComponents = chips.map((chip, index) => {
-    const IconComponent = MuiIcons[chip.icon];
+    const IconComponent = selectedIcons[chip.icon];
     return (
       <Chip
-        icon={IconComponent ? <IconComponent color={'#000'} /> : null}
+        icon={IconComponent ? <IconComponent  color={'#000'} /> : null}
         onClick={() => onClick(chip)}
         key={index}
         className={classes.chip}

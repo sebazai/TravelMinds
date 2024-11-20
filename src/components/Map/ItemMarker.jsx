@@ -34,10 +34,17 @@ const leafletPopupStyle = `
   .custom-popup .leaflet-popup-tip-container {
     display: none !important;
   }
+
+  .custom-leaflet-tooltip {
+  background-color: rgba(0, 0, 0, 0) !important;
+  color: white !important;
+  font-weight: bold !important;
+  border: none !important;
+  box-shadow: none !important;
+
 `;
 
 export const ItemMarker = (props) => {
-
   const {
     item: {
       name = '',
@@ -45,7 +52,7 @@ export const ItemMarker = (props) => {
       coordinates,
       opens_at = '00:00',
       closes_at = '00:00',
-      description = '',
+      description = ' ',
       photo,
       rating,
     },
@@ -88,13 +95,12 @@ export const ItemMarker = (props) => {
 
   const handleFavoriteClick = () => {
     if (!isFavorite) {
-    setIsFavorite(true);
-    onFavoriteClick(props.item);
-    } else {  
-    setIsFavorite(false);
-    //todo : call the API to remove the favorite
+      setIsFavorite(true);
+      onFavoriteClick(props.item);
+    } else {
+      setIsFavorite(false);
+      //todo : call the API to remove the favorite
     }
-
   };
 
   return (
@@ -109,7 +115,13 @@ export const ItemMarker = (props) => {
       }}
     >
       {!isOpened && (
-        <Tooltip opacity={1} direction="bottom" offset={[14, 40]} permanent>
+        <Tooltip
+          opacity={1}
+          direction="right"
+          offset={[14, 40]}
+          permanent
+          className="custom-leaflet-tooltip"
+        >
           {name}
         </Tooltip>
       )}
@@ -140,20 +152,20 @@ export const ItemMarker = (props) => {
             }}
             onClick={handleFavoriteClick}
           >
-             <FavoriteIcon /> 
+            <FavoriteIcon />
           </IconButton>
 
           <CardMedia
             component="img"
-            sx={{ 
-              width: '40%', 
+            sx={{
+              width: '40%',
               objectFit: 'cover',
               height: '100%',
               backgroundImage: `url(${photo})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
-            }} 
+            }}
           />
 
           <CardContent
@@ -162,17 +174,17 @@ export const ItemMarker = (props) => {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              padding: 2, 
+              padding: 2,
             }}
           >
             <Grid container alignItems="center" justifyContent="space-between">
               <Typography
-                variant="subtitle1" 
+                variant="subtitle1"
                 component="div"
-                sx={{ 
+                sx={{
                   fontWeight: 'bold',
                   fontSize: '1rem',
-                  lineHeight: 1.2 
+                  lineHeight: 1.2,
                 }}
               >
                 {name}
@@ -190,13 +202,17 @@ export const ItemMarker = (props) => {
               />
             </Grid>
 
-            <Typography variant="body2" color="text.secondary" sx={{ marginBottom: 1 }}>
-              {description}
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ marginBottom: 1 }}
+            >
+              {address}
             </Typography>
-            
-            <Typography 
-              variant="body2" 
-              color="text.secondary" 
+
+            <Typography
+              variant="body2"
+              color="text.secondary"
               sx={{ marginBottom: 1 }}
             >
               Schedules : {opens_at} - {closes_at}

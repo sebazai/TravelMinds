@@ -9,7 +9,7 @@ import {
   CardContent,
 } from '@mui/material';
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, locality, country}) => {
   return (
     <Card
       sx={{
@@ -62,7 +62,7 @@ const UserCard = ({ user }) => {
                 {user.countryOfOrigin}
               </Typography>
             </Box>
-
+            {locality && country && (
             <Typography
               variant="body2"
               color="text.primary"
@@ -71,8 +71,9 @@ const UserCard = ({ user }) => {
                 fontStyle: 'italic',
               }}
             >
-              Actually in {user.currentLocation.city} ...
+              Actually in {locality}, {country}
             </Typography>
+            )}
           </Grid>
 
         </Grid>

@@ -54,7 +54,7 @@ export const SearchBar = (props) => {
         sx={{
           flex: 1,
           padding: '8px 16px',
-          border: '1px solid #ccc',
+          border: '1px solid #7B6DBB',
           borderRadius: '20px',
           color: 'text.primary',
           '&::placeholder': {

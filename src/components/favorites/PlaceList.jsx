@@ -2,7 +2,7 @@ import React from 'react';
 import PlaceCard from './PlaceCard';
 import { Box } from '@mui/material';
 
-const PlaceList = ({ favorites }) => {
+const PlaceList = ({ favorites, deleteFavorite }) => {
   return (
     <Box
       sx={{
@@ -18,6 +18,8 @@ const PlaceList = ({ favorites }) => {
           description={favorite.description}
           image={favorite.photo}
           rate={favorite.rating}
+          onDelete={() => deleteFavorite(favorite._id)}
+
         />
       ))}
     </Box>

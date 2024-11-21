@@ -40,7 +40,6 @@ const Map = (props) => {
 
   const saveFavorite = async (data) => {
     console.log('Call the API to save the favorite', data);
-
     
     fetch('/api/favorites', {
       method: 'POST',

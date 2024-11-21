@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-const PlaceCard = ({ title, description, image, rate }) => {
+const PlaceCard = ({ title, description, image, rate, onDelete }) => {
   return (
     <Card
       sx={{
@@ -31,6 +31,7 @@ const PlaceCard = ({ title, description, image, rate }) => {
           zIndex: 1,
           color: 'grey.700',
         }}
+        onClick={onDelete}
       >
         <CloseIcon />
       </IconButton>

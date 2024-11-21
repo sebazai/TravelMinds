@@ -60,22 +60,6 @@ export const SelectionOverlay = (props) => {
         className={classes.chip}
         label={chip.title}
         clickable
-        // sx={{
-        //   '&.MuiChip-root': {
-        //     backgroundColor: '#7B6DBB !important',
-        //     color: 'white',
-        //     '&:hover': {
-        //       backgroundColor: '#7B6DDD !important' 
-        //     },
-        //     border : '1px solid #7B6DBB !important',
-        //   },
-        //   '& .MuiChip-label': {
-        //     color: 'white'
-        //   },
-        //   '& .MuiChip-icon': {
-        //     color: 'white'
-        //   }
-        // }}
       />
     );
   });

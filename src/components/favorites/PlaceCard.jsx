@@ -10,7 +10,11 @@ import {
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-const PlaceCard = ({ title, description, image, rate, onDelete }) => {
+const PlaceCard = ({ title, description, image, rate, onDelete, location }) => {
+  // Convert latitude and longitude to easily readable format
+  const convenrtCoordinates = (coordinates) => {
+    return `${coordinates.latitude}, ${coordinates.longitude}`;
+  };
   return (
     <Card
       sx={{
@@ -19,7 +23,7 @@ const PlaceCard = ({ title, description, image, rate, onDelete }) => {
         width: '100%',
         maxWidth: 580,
         position: 'relative',
-        marginX: 'auto', 
+        marginX: 'auto',
       }}
     >
       <IconButton
@@ -38,7 +42,7 @@ const PlaceCard = ({ title, description, image, rate, onDelete }) => {
 
       <CardMedia
         component="img"
-        sx={{ width: '35%' }} 
+        sx={{ width: '35%' }}
         image={image}
         alt={title}
       />
@@ -49,12 +53,12 @@ const PlaceCard = ({ title, description, image, rate, onDelete }) => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          paddingX: 1.5, 
+          paddingX: 1.5,
         }}
       >
         <Grid container alignItems="center" justifyContent="space-between">
           <Typography
-            variant="subtitle1" 
+            variant="subtitle1"
             component="div"
             sx={{ fontWeight: 'bold' }}
           >
@@ -75,6 +79,15 @@ const PlaceCard = ({ title, description, image, rate, onDelete }) => {
         <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
+
+        {location && (
+          <a
+            href={`https://www.google.com/maps/place/${convenrtCoordinates(location)}/`}
+            target="_blank"
+          >
+            Go to
+          </a>
+        )}
       </CardContent>
     </Card>
   );

@@ -18,8 +18,8 @@ const PlaceList = ({ favorites, deleteFavorite }) => {
           description={favorite.description}
           image={favorite.photo}
           rate={favorite.rating}
+          location={favorite.coordinates}
           onDelete={() => deleteFavorite(favorite._id)}
-
         />
       ))}
     </Box>

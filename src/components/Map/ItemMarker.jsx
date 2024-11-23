@@ -137,7 +137,7 @@ export const ItemMarker = (props) => {
             display: 'flex',
             width: '100%',
             minWidth: 'calc(100vw - 15px)',
-            height: 200,
+            height: 250,
             position: 'relative',
             margin: 0,
           }}
@@ -208,6 +208,14 @@ export const ItemMarker = (props) => {
               sx={{ marginBottom: 1 }}
             >
               {address}
+            </Typography>
+
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ marginBottom: 1 }}
+            >
+              {description}
             </Typography>
 
             <Typography

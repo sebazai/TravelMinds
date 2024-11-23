@@ -6,6 +6,12 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     getUser: builder.query({
       query: () => '/users',
+      transformResponse: (response) => {
+        if (response?.favorites) {
+          response.favorites = response.favorites.reverse();
+        }
+        return response;
+      },
     }),
   }),
 });

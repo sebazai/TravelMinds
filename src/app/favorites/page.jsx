@@ -6,18 +6,14 @@ import Banner from '@/components/global/Banner';
 import { useGetUserQuery } from '@/store/services/userApi.js';
 
 export default function Page() {
-  const {isError,  isLoading, data: userData, refetch} = useGetUserQuery();
+  const { isError, isLoading, data: userData, refetch } = useGetUserQuery();
 
-  const deleteFavorite = async (id) => {  
+  const deleteFavorite = async (id) => {
     const response = await fetch(`/api/favorites/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-    }).then(() => 
-      refetch()
-      
-    );
+    }).then(() => refetch());
   };
-
 
   if (isLoading) {
     return (
@@ -39,10 +35,13 @@ export default function Page() {
   }
   return (
     <div>
-        <Banner title="MY FAVORITES" />     
-        <Box sx={{ marginTop: '70px', paddingX: 2 }}>
-          <PlaceList favorites={userData.favorites} deleteFavorite={deleteFavorite} />
-        </Box>
+      <Banner title="MY FAVORITES" />
+      <Box sx={{ marginTop: '70px', paddingX: 2 }}>
+        <PlaceList
+          favorites={userData.favorites}
+          deleteFavorite={deleteFavorite}
+        />
+      </Box>
     </div>
   );
 }

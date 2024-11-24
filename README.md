@@ -2,6 +2,8 @@
 
 A Computer Science Project for the University of Helsinki CSM11006 course.
 
+[Travelminds Demo Pitch Report](https://drive.google.com/file/d/1yMfTQKu2mE9y6YU3XJpfC4Ph1lj7Uaho/view?usp=sharing)
+
 ## Trello board
 
 [The board](https://trello.com/b/H7lGfMBt/holidayapp)
@@ -28,19 +30,15 @@ If you use nvmrc that is recommended, run `nvm use` to get the correct Node vers
 
 `npm ci` - to install dependencies
 
-`npm run dev`
+`npm run dev` - to start the development server
 
-You should see:
-`Pinged your deployment. You successfully connected to MongoDB!` once you are connected to DB succesfully.
-
-Url is `localhost:3000`
+Upon successful connection to MongoDB, the application will be accessible at url `localhost:3000`
 
 ## Seeding the Database
 
 To seed the database with a sample user and preferences, run the following command:
 
-```bash
-npm run seed
+`npm run seed`
 
 This script will:
 

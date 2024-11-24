@@ -2,7 +2,7 @@
 
 A Computer Science Project for the University of Helsinki CSM11006 course.
 
-[Travelminds Documentary](https://github.com/sebazai/TravelMinds/Travelminds_personalized_travel_planning_application.pdf)
+[Travelminds Documentary](https://github.com/sebazai/TravelMinds/blob/main/Travelminds_personalized_travel_planning_application.pdf)
 
 ## Trello board
 

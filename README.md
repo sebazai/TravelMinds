@@ -2,7 +2,7 @@
 
 A Computer Science Project for the University of Helsinki CSM11006 course.
 
-[Travelminds Documentary](https://drive.google.com/file/d/1yMfTQKu2mE9y6YU3XJpfC4Ph1lj7Uaho/view?usp=sharing)
+[Travelminds Documentary](https://github.com/sebazai/TravelMinds/Travelminds_personalized_travel_planning_application.pdf)
 
 ## Trello board
 
@@ -38,7 +38,7 @@ Upon successful connection to MongoDB, the application will be accessible at url
 
 To seed the database with a sample user and preferences, run the following command:
 
-`npm run seed'
+`npm run seed`
 
 This script will:
 
@@ -53,5 +53,3 @@ This script will:
 - Before running the seed script, make sure all dependencies are installed by executing `npm install`.
 
 By following these steps, you'll set up a seed script that initializes your MongoDB database with a sample user and preferences, facilitating development and testing.
-
-```

@@ -38,7 +38,7 @@ Upon successful connection to MongoDB, the application will be accessible at url
 
 To seed the database with a sample user and preferences, run the following command:
 
-`npm run seed'
+`npm run seed`
 
 This script will:
 

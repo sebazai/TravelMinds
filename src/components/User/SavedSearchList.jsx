@@ -1,6 +1,6 @@
 // src/components/User/SavedSearchList.jsx
 import React from 'react';
-import { Typography,Box, Container } from '@mui/material';
+import { Typography, Box, Container } from '@mui/material';
 import PreferenceCard from './PreferencesCard';
 
 const SavedSearchList = ({ savedSearches }) => {
@@ -13,33 +13,27 @@ const SavedSearchList = ({ savedSearches }) => {
   }
   return (
     <>
-
-      <Box
-          sx={{
-            backgroundColor: 'text.secondary',
-            color: 'text.primary',            
-            width: '100%',              
-            height: '8vh',             
-            display: 'flex',            
-            justifyContent: 'center',  
-            alignItems: 'center',     
-            marginTop: 2,
-            marginBottom: 2
-          }}
-        >
-          
-          <Typography variant="h5">
-          Saved searches
-          </Typography>
-         
-      </Box>
-    
       <Box
         sx={{
-          maxHeight: '46vh',     
-          overflowY: 'auto',  
-          margin: 2 
-    
+          backgroundColor: 'text.secondary',
+          color: 'text.primary',
+          width: '100%',
+          height: '8vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 2,
+          marginBottom: 2,
+        }}
+      >
+        <Typography variant="h5">Saved searches</Typography>
+      </Box>
+
+      <Box
+        sx={{
+          maxHeight: '46vh',
+          overflowY: 'auto',
+          margin: 2,
         }}
       >
         <Container>

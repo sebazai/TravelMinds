@@ -66,7 +66,6 @@ export default function RootLayout({ children }) {
                 height: '100vh',
               }}
             >
-              <h1>Hot reload works</h1>
               {children}
               <NavBar />
             </div>

@@ -67,3 +67,13 @@ Open `localhost:8080`
 Run `docker compose -f docker-compose.dev.yml down` to remove containers
 
 Run `docker compose -f docker-compose.dev.yml up` for new fresh environment
+
+## Production Docker
+
+Add in `.env.production` the `MONGODB_UI=<here>` to your Mongodb Atlas instance in cloud
+
+**Optionally** Run with same MONGODB_URI as .env.development to test out production build
+
+Run `docker compose up --build`
+
+Open `localhost:8080`

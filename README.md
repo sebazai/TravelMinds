@@ -53,3 +53,27 @@ This script will:
 - Before running the seed script, make sure all dependencies are installed by executing `npm install`.
 
 By following these steps, you'll set up a seed script that initializes your MongoDB database with a sample user and preferences, facilitating development and testing.
+
+## Developing with docker compose
+
+Automatically seeds the database when container starts.
+
+Run `docker compose -f docker-compose.dev.yml up --build`
+
+Open `localhost:8080`
+
+### Re-seeding
+
+Run `docker compose -f docker-compose.dev.yml down` to remove containers
+
+Run `docker compose -f docker-compose.dev.yml up` for new fresh environment
+
+## Production Docker
+
+Add in `.env.production` the `MONGODB_UI=<here>` to your Mongodb Atlas instance in cloud
+
+**Optionally** Run with same MONGODB_URI as .env.development to test out production build
+
+Run `docker compose up --build`
+
+Open `localhost:8080`

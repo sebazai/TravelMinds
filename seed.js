@@ -4,7 +4,9 @@ import { User } from './src/models/User.js';
 import { Preference } from './src/models/Preference.js';
 import { Favorite } from './src/models/Favorite.js';
 
-dotenv.config({ path: '.env.local' });
+const dotEnvPath =
+  process.env.NODE_ENV === 'development' ? '.env.development' : '.env.local';
+dotenv.config({ path: dotEnvPath });
 
 async function seedDatabase() {
   try {
@@ -43,6 +45,10 @@ async function seedDatabase() {
       description: 'Central Park is an urban park in New York City.',
       photo: 'https://source.unsplash.com/featured/?centralpark',
       createdBy: newUser._id,
+      coordinates: {
+        latitude: 40.785091,
+        longitude: -73.968285,
+      },
     };
 
     // Create preferences with the user’s _id as `createdBy`
